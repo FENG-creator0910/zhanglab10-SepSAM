@@ -369,16 +369,16 @@ not incorrect class assignment.
 
 \begin{figure}[t]
 \centering
-% Placeholder for ceiling visualization figure
-\fbox{\parbox{0.85\linewidth}{\vspace{3cm}\centering
-\textbf{[Figure 1: Ceiling Quantification Chain]} \\
-\small
-DBSCAN oracle (39.4\%) $\rightarrow$ + SAM pipeline loss $\rightarrow$ $\leq$35\%
-$\rightarrow$ actual (31.6\%) $\rightarrow$ hard practical bound ($\sim$30\%)
-\vspace{0.5cm}}}
-\caption{Quantified capability ceiling chain for zero-training pure-geometric LiDAR
-instance segmentation. Each level represents a tightened bound established by a
-disconfirmed improvement hypothesis.}
+\includegraphics[width=\linewidth]{fig1_ceiling.pdf}
+\caption{\textbf{Quantified capability ceiling of zero-training pure-geometric LiDAR
+instance segmentation.} (a) The ceiling chain tightens from the theoretical DBSCAN
+oracle (39.4\% mIoU, multi-scale upper bound) down to the conservative hard practical
+bound ($\sim$30\%), with each level established by specific disconfirmed improvement
+directions. (b) Six independent geometric improvement hypotheses---point-count
+filtering, fragment-level features, mask-level features, IoU-based merging, FPS
+sampling, and multi-scale clustering---were each empirically disconfirmed, collectively
+converging to the ceiling shown in (a). This figure tells the central story of the
+paper: pure geometry cannot replace semantic information.}
 \label{fig:ceiling}
 \end{figure}
 
