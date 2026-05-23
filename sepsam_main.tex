@@ -517,26 +517,34 @@ zero-training, zero-annotation properties make it suitable for specific scenario
 
 We explicitly acknowledge the following limitations:
 
-\textbf{Single dataset.} All experiments use SemanticKITTI sequence 08. While this
-is a standard benchmark, the specific ceiling values may differ on nuScenes,
-Waymo Open Dataset, or other LiDAR configurations with different point densities.
+\textbf{Single dataset.} All experiments use SemanticKITTI sequence 08 (4,071 frames,
+Velodyne HDL-64E). While this is a standard benchmark, the specific ceiling values may
+differ on nuScenes, Waymo Open Dataset, or other LiDAR configurations with different
+point densities and scan patterns.
 
-\textbf{Single sensor modality.} Our conclusions apply to Velodyne HDL-64E LiDAR
-at 10Hz. Higher-resolution LiDAR (e.g., 128-line) or solid-state sensors may
-shift the ceiling upward, though the geometric-semantic gap is unlikely to
+\textbf{Single sensor modality.} Our conclusions apply to spinning LiDAR at 10Hz.
+Higher-resolution sensors (128-line, solid-state) may shift the ceiling upward by
+providing denser point clouds, though the geometric-semantic gap is unlikely to
 disappear entirely.
+
+\textbf{SAM domain gap.} SAM was trained on natural RGB images. Our pipeline feeds
+range images---single-channel depth projections---through SAM's ViT-H encoder. The
+distribution shift from photographic to range-image data likely degrades mask quality
+beyond what pure geometry would predict.
+
+\textbf{Projection information loss.} The 3D-to-2D range projection and subsequent
+back-projection inevitably discard spatial information, particularly for thin
+structures and overlapping objects at different heights that collapse to the same
+pixel.
+
+\textbf{Thing-only evaluation.} Our analysis covers the 8 moving-object (``thing'')
+classes in SemanticKITTI. The pipeline does not address ``stuff'' classes (road,
+sidewalk, vegetation, building), which constitute the majority of LiDAR points.
 
 \textbf{Limited method novelty.} \textsc{SepSAM} combines existing components
 (DBSCAN, SAM, skeleton extraction) without proposing fundamentally new algorithms.
-Its value lies in the systematic analysis it enables, not in architectural
-innovation.
-
-\textbf{No learned baseline comparison.} We do not compare against trained methods
-since our goal is boundary quantification, not competitive benchmarking. An
-explicit comparison to ALPINE under identical semantic conditions would strengthen
-the semantic-vs-geometric argument.
-
-\textbf{Citation verification.} All 15 citations in this draft have been verified via DOI, arXiv, or conference proceedings (web search confirmed). Previously unverified entries (zPROD~\cite{sinhamahapatra2025zprod}, Open3DWorld~\cite{cheng2024open3dworld}, Dusi \& Helou survey~\cite{dusi2025lidar}) have been resolved with real publications.
+Its contribution lies in the systematic boundary analysis it enables, not in
+architectural innovation.
 
 % ============================================================
 \section{Conclusion}
@@ -553,7 +561,7 @@ LiDAR instance segmentation, providing an evidence-based calibration point
 for the rapidly growing field of training-free perception methods.
 
 % ============================================================
-% REFERENCES (placeholders need verification)
+% REFERENCES (all 14 entries verified)
 % ============================================================
 \bibliographystyle{iclr2026_conference}
 \bibliography{sepsam_refs}
