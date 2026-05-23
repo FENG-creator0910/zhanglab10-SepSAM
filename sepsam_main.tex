@@ -22,20 +22,20 @@
 \maketitle
 
 \begin{abstract}
-We introduce \textsc{SepSAM} and, more importantly, the first systematic quantification
-of the capability boundary for zero-training pure-geometric LiDAR instance
-segmentation. The problem is challenging because point cloud geometry alone carries
-limited semantic signal: we show that no geometric descriptor exceeds AUC 0.7 for
-separating objects from background on 209K fragments. We bridge SAM to pure LiDAR
-via DBSCAN over-segmentation and skeleton-based geometric prompt sampling---requiring
-neither training data, human annotations, nor RGB imagery. Through six empirically
-disconfirmed improvement hypotheses on SemanticKITTI (4,071 frames), we establish a
-quantified ceiling chain: DBSCAN oracle at 39.4\% mIoU, pipeline practical bound
-$\leq$35\%, and empirical result of 31.6\%, with class-agnostic evaluation confirming
-that geometric matching---not semantic confusion---is the bottleneck. Our core
-finding is that zero-training pure-geometric LiDAR instance segmentation has a hard
-ceiling of $\sim$30\% mIoU, demonstrating that semantic information is fundamentally
-irreplaceable and providing an evidence-based calibration point for the field.
+We present the first systematic quantification of the capability boundary for
+zero-training, pure-geometric LiDAR instance segmentation. The core challenge is that
+point cloud geometry alone carries limited semantic signal: across 209K fragments and
+15K SAM masks, no geometric descriptor exceeds AUC 0.7 for distinguishing objects from
+background. We bridge SAM to pure LiDAR via DBSCAN over-segmentation and skeleton-based
+geometric prompt sampling---requiring no training data, human annotations, or RGB
+imagery. Through six independently tested and empirically disconfirmed improvement
+hypotheses on SemanticKITTI (4,071 frames), we establish a tightening ceiling chain:
+DBSCAN oracle at 39.4\% mIoU, pipeline bound $\leq$35\%, and empirical result of
+31.6\%. Class-agnostic evaluation closes the loop: geometric matching quality, not
+semantic confusion, is the bottleneck (28.8\% vs.\ 30.2\%). Our core finding is a hard
+ceiling of $\sim$30\% mIoU for zero-training pure-geometric LiDAR instance
+segmentation---demonstrating that semantic information is fundamentally irreplaceable
+and providing a quantified calibration point for the field.
 \end{abstract}
 
 % ============================================================
@@ -92,16 +92,7 @@ following contributions:
     an open, reproducible lower bound against which future training-free methods can
     be measured---any approach claiming zero training should substantially exceed
     30\% mIoU.
-\end{enumerate} By testing six independent improvement
-hypotheses---each motivated by plausible geometric intuition---and disconfirming each
-with quantitative evidence, we establish a chain of capability ceilings (Fig.~\ref{fig:ceiling}):
-
-\begin{itemize}
-    \item \textbf{DBSCAN cluster oracle}: 39.4\% mIoU (multi-scale upper bound)
-    \item \textbf{Pipeline-internal ceiling}: $\leq$35\% (SAM segmentation loss)
-    \item \textbf{Empirical full-sequence result}: 31.6\% (our actual performance)
-    \item \textbf{Hard practical bound}: $\sim$30\% (conservative estimate)
-\end{itemize}
+\end{enumerate}
 
 Critically, geometric features computed at both fragment-level (209,832 DBSCAN clusters,
 AUC~$<0.7$ for all 8 descriptors) and mask-level (14,950 SAM masks, best AUC~$=0.660$)
@@ -168,7 +159,7 @@ training-free methods.
 \section{Method: \textsc{SepSAM}}
 % ============================================================
 
-\sepsam consists of five sequential stages (Fig.~\ref{fig:pipeline}). The key design
+\sepsam consists of five sequential stages. The key design
 principle is that every operation is purely geometric---no learned parameters, no
 semantic lookup tables, no dataset-specific calibration.
 
@@ -259,6 +250,12 @@ Motorcycl. &  10 &  3.2 &  1.1 \\
 \textbf{All} & 68 & \textbf{31.6} & \textbf{27.1} \\
 \bottomrule
 \end{tabular}
+
+\vspace{4pt}
+{\footnotesize \textbf{Note:} The pipeline is fully deterministic (fixed SAM checkpoint,
+fixed DBSCAN parameters); per-class standard deviation across runs is zero. Reported
+mIoU reflects the entire 4,071-frame sequence. Per-class variance originates from the
+natural diversity of instance sizes and geometries within each object category.}
 \end{table}
 
 \subsection{Systematic Boundary Analysis}
