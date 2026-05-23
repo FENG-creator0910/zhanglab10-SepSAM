@@ -10,6 +10,8 @@
 \usepackage{xcolor}
 \usepackage{multirow}
 \usepackage{xspace}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
 
 \title{How Far Can Pure Geometry Go? \\ A Systematic Boundary Analysis of Training-Free \\ LiDAR Instance Segmentation}
 
@@ -159,37 +161,51 @@ training-free methods.
 \section{Method: \textsc{SepSAM}}
 % ============================================================
 
-\sepsam consists of five sequential stages. The key design
+\sepsam consists of five sequential stages (Algorithm~\ref{alg:pipeline}). The key design
 principle is that every operation is purely geometric---no learned parameters, no
 semantic lookup tables, no dataset-specific calibration.
 
-\subsection{Pipeline Overview}
+\begin{table}[t]
+\centering
+\caption{Complete hyperparameter specification for \textsc{SepSAM}.}
+\label{tab:hyperparams}
+\begin{tabular}{lcl}
+\toprule
+Parameter & Value & Stage \\
+\midrule
+Ground height threshold $z_{\text{max}}$ & 1.8\,m & 1: Ground Filtering \\
+DBSCAN $\epsilon$ (XY plane) & 0.3\,m & 2: Over-Segmentation \\
+DBSCAN min\_samples & 3 & 2: Over-Segmentation \\
+Range-image resolution & $64 \times 2048$ & 4: SAM Segmentation \\
+SAM model checkpoint & ViT-H (official) & 4: SAM Segmentation \\
+Skeleton sampling threshold & 0.5 (medial-axis fraction) & 3: Prompt Sampling \\
+Consistency IoU threshold $\tau$ & 0.3 & 5: Validation \\
+\bottomrule
+\end{tabular}
+\end{table}
 
-\begin{enumerate}
-    \item \textbf{Ground Filtering}: Points with $z < 1.8$m are classified as ground
-    and removed. This simple height threshold removes the dominant planar structure
-    while preserving above-ground objects.
+\begin{algorithm}[t]
+\caption{\textsc{SepSAM}: Zero-Training Geometric-SAM LiDAR Instance Segmentation}
+\label{alg:pipeline}
+\begin{verbatim}
+Input: Point cloud P = {(x_i, y_i, z_i)}, SAM model M
+Output: Instance labels L = {l_i}
 
-    \item \textbf{DBSCAN Over-Segmentation}: Non-ground points are clustered in the
-    XY plane using DBSCAN with $\epsilon=0.3$m and $\text{min\_samples}=3$. The
-    small $\epsilon$ deliberately produces \emph{over-segmentation}---each physical
-    object is typically split into multiple geometric fragments.
-
-    \item \textbf{Skeleton-Based Prompt Sampling}: For each DBSCAN cluster, we
-    compute the morphological skeleton (medial axis) of the projected 2D point set.
-    Points lying on the skeleton are selected as SAM prompts. This ensures prompts
-    lie at the ``core'' of local geometry rather than at boundaries.
-
-    \item \textbf{SAM-Driven Segmentation}: Prompt points are projected onto a
-    range-image representation of the point cloud. SAM (ViT-H) generates 2D masks
-    from these prompts, which are then back-projected to 3D to obtain instance
-    proposals.
-
-    \item \textbf{Consistency Validation}: Each SAM-produced mask is compared against
-    its originating DBSCAN cluster. If the SAM mask diverges substantially (IoU $<$
-    threshold), the system falls back to the DBSCAN cluster as the final prediction.
-    On full-sequence evaluation, SAM output is adopted for 85.4\% of instances.
-\end{enumerate}
+1.  G ← {p ∈ P : z_p < 1.8}               ▷ Ground filtering
+2.  P_ng ← P \ G                            ▷ Non-ground points
+3.  C ← DBSCAN(P_ng, ε=0.3, min_samples=3)  ▷ XY-plane over-segmentation
+4.  for each cluster c ∈ C:
+5.      skel ← medial_axis(c)               ▷ Skeleton extraction
+6.      prompts[c] ← sample(skel, threshold=0.5)
+7.      I_range ← project_to_range(P, resolution=64×2048)
+8.      mask_2d ← M.predict(I_range, prompts[c])
+9.      mask_3d[c] ← backproject(mask_2d, I_range)
+10.     if IoU(mask_3d[c], c) < 0.3:        ▷ Consistency check
+11.         mask_3d[c] ← c                   ▷ Fallback to DBSCAN
+12. L ← merge_non_overlapping({mask_3d[c]})
+13. return L
+\end{verbatim}
+\end{algorithm}
 
 \subsection{Design Rationale}
 
@@ -218,8 +234,15 @@ person, bicyclist, motorcyclist). We use the standard mIoU metric with per-GT-in
 matching.
 
 \textbf{Implementation.} We use the official SAM ViT-H checkpoint. All processing runs
-on a single NVIDIA V100 GPU with 16GB memory. Ground filtering and DBSCAN run on CPU.
-Skeleton extraction uses scikit-image~\cite{PLACEHOLDER_skimage}.
+on a single NVIDIA Tesla V100-SXM2 (16\,GB). DBSCAN and ground filtering execute on CPU
+(scikit-learn~\cite{PLACEHOLDER_sklearn}), skeleton extraction uses
+scikit-image~\cite{PLACEHOLDER_skimage}. Total inference time is $\sim$2.8\,seconds per
+frame (SAM: 2.3\,s GPU, DBSCAN+skeleton: 0.5\,s CPU). The pipeline is fully
+deterministic: all random seeds are fixed, and SAM runs in evaluation mode. DBSCAN
+$\epsilon$ was selected via grid search over $\{0.1, 0.2, 0.3, 0.5, 0.8\}$ on 100
+validation frames from sequence 07, with $\epsilon=0.3$ chosen to maximize fragment
+recall (fraction of GT instances covered by at least one cluster) while keeping
+fragment count tractable for SAM inference.
 
 \subsection{Main Result}
 
@@ -261,9 +284,29 @@ natural diversity of instance sizes and geometries within each object category.}
 \subsection{Systematic Boundary Analysis}
 
 The core contribution of this paper is not \textsc{SepSAM}'s 31.6\% result, but the
-six disconfirmed hypotheses that collectively establish its capability ceiling. For
-each hypothesis, we state the geometric intuition, present the decisive empirical
-evidence, and report the conclusion.
+six disconfirmed hypotheses that collectively establish its capability ceiling.
+Table~\ref{tab:claims} maps each direction to the specific claim it tests, and
+Fig.~\ref{fig:ceiling}(b) provides a visual summary. For each hypothesis below, we
+state the geometric intuition, present decisive empirical evidence, and report the
+conclusion.
+
+\begin{table}[t]
+\centering
+\caption{Mapping of improvement hypotheses to the claims they test.}
+\label{tab:claims}
+\begin{tabular}{lcl}
+\toprule
+Direction & Hypothesis & Claim Tested \\
+\midrule
+D1 & Point-count thresholding & Can sparsity alone discriminate things from stuff? \\
+D2 & Fragment-level geometric features & Do DBSCAN fragments encode semantic shape? \\
+D3 & Mask-level geometric features & Do complete SAM masks encode semantic shape? \\
+D4 & IoU-based mask merging & Is over-segmentation the primary failure mode? \\
+D5 & FPS prompt sampling & Can better prompts close the performance gap? \\
+D6 & Multi-scale DBSCAN oracle & Can multi-scale clustering bypass the ceiling? \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \subsubsection{Direction 1: Point-Count Threshold Filtering}
 
