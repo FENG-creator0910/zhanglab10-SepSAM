@@ -174,8 +174,8 @@ baseline for the entire spectrum of training-free perception methods.
 \section{Method: \textsc{SepSAM}}
 % ============================================================
 
-\sepsam consists of five sequential stages (Algorithm~\ref{alg:pipeline}). The key design
-principle is that every operation is purely geometric---no learned parameters, no
+\textsc{SepSAM} consists of five sequential stages (Algorithm~\ref{alg:pipeline}). The key
+design principle is that every operation is purely geometric---no learned parameters, no
 semantic lookup tables, no dataset-specific calibration.
 
 \begin{table}[t]
@@ -255,7 +255,8 @@ deterministic: all random seeds are fixed, and SAM runs in evaluation mode. DBSC
 $\epsilon$ was selected via grid search over $\{0.1, 0.2, 0.3, 0.5, 0.8\}$ on 100
 validation frames from sequence 07, with $\epsilon=0.3$ chosen to maximize fragment
 recall (fraction of GT instances covered by at least one cluster) while keeping
-fragment count tractable for SAM inference.
+fragment count tractable for SAM inference. Code and evaluation scripts will be
+released upon publication.
 
 \subsection{Main Result}
 
@@ -417,6 +418,9 @@ on geometric IoU, ignoring semantic class labels entirely. This yields 28.8\% mI
 compared to 30.2\% with semantic matching---a difference of only 1.4 percentage
 points. This confirms that the bottleneck is geometric matching quality itself,
 not incorrect class assignment.
+% TODO(author): 30.2% class-aware in this comparison differs from 31.6% in main result.
+% Verify whether this is due to subset/sampling differences or metric calculation.
+% These numbers must be consistent or the discrepancy must be explained in the text.
 
 \subsection{Capability Ceiling Summary}
 
