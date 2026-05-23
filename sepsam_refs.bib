@@ -1,6 +1,8 @@
 % ================================================================
-% VERIFIED citations (DOI or arXiv confirmed, BibTeX fetched programmatically)
+% VERIFIED citations (DOI or arXiv confirmed programmatically)
 % ================================================================
+
+% --- Foundation Models ---
 
 @InProceedings{Kirillov_2023_ICCV,
     author    = {Kirillov, Alexander and Mintun, Eric and Ravi, Nikhila and Mao, Hanzi and Rolland, Chloe and Gustafson, Laura and Xiao, Tete and Whitehead, Spencer and Berg, Alexander C. and Lo, Wan-Yen and Doll\'{a}r, Piotr and Girshick, Ross},
@@ -11,14 +13,41 @@
     pages     = {4015--4026}
 }
 
-@InProceedings{Behley_2019_ICCV,
-    author    = {Behley, Jens and Garbade, Martin and Milioto, Andres and Quenzel, Jan and Behnke, Sven and Stachniss, Cyrill and Gall, J\"{u}rgen},
-    title     = {Semantic{KITTI}: A Dataset for Semantic Scene Understanding of {LiDAR} Sequences},
-    booktitle = {Proceedings of the IEEE/CVF International Conference on Computer Vision (ICCV)},
-    month     = {October},
-    year      = {2019},
-    pages     = {9297--9307}
+@inproceedings{radford2021learning,
+    title     = {Learning Transferable Visual Models From Natural Language Supervision},
+    author    = {Radford, Alec and Kim, Jong Wook and Hallacy, Chris and Ramesh, Aditya and Goh, Gabriel and Agarwal, Sandhini and Sastry, Girish and Askell, Amanda and Mishkin, Pamela and Clark, Jack and Krueger, Gretchen and Sutskever, Ilya},
+    booktitle = {Proceedings of the 38th International Conference on Machine Learning (ICML)},
+    series    = {Proceedings of Machine Learning Research},
+    volume    = {139},
+    pages     = {8748--8763},
+    year      = {2021},
+    publisher = {PMLR}
 }
+
+% --- SAM 3D Extensions ---
+
+@article{guo2024sam2point,
+    title     = {{SAM}2Point: Segment Any {3D} as Videos in Zero-shot and Promptable Manners},
+    author    = {Guo, Ziyu and Zhang, Renrui and Zhu, Xiangyang and Tong, Chengzhuo and Gao, Peng and Li, Chunyuan and Heng, Pheng-Ann},
+    journal   = {arXiv preprint arXiv:2408.16768},
+    year      = {2024}
+}
+
+@article{zhou2024pointsam,
+    title     = {Point-{SAM}: Promptable {3D} Segmentation Model for Point Clouds},
+    author    = {Zhou, Yuchen and Gu, Jiayuan and Chiang, Tung Yen and Xiang, Fanbo and Su, Hao},
+    journal   = {arXiv preprint arXiv:2406.17741},
+    year      = {2024}
+}
+
+@article{cen2023segment,
+    title     = {Segment Anything in {3D} with {NeRFs}},
+    author    = {Cen, Jiazhong and Zhou, Zanwei and Fang, Jiemin and Yang, Chen and Shen, Wei and Xie, Lingxi and Jiang, Dongsheng and Zhang, Xiaopeng and Tian, Qi},
+    journal   = {arXiv preprint arXiv:2304.12308},
+    year      = {2023}
+}
+
+% --- Training-Free LiDAR Segmentation ---
 
 @article{sautier2025alpine,
     title     = {Is clustering enough for {LiDAR} instance segmentation? {A} state-of-the-art training-free baseline},
@@ -35,80 +64,69 @@
     year      = {2025}
 }
 
-@article{guo2024sam2point,
-    title     = {{SAM}2Point: Segment Any {3D} as Videos in Zero-shot and Promptable Manners},
-    author    = {Guo, Ziyu and Zhang, Renrui and Zhu, Xiangyang and Tong, Chengzhuo and Gao, Peng and Li, Chunyuan and Heng, Pheng-Ann},
-    journal   = {arXiv preprint arXiv:2408.16768},
-    year      = {2024}
+@article{oh2025trainingfree,
+    title     = {Training-Free Global Geometric Association for {4D} {LiDAR} Panoptic Segmentation},
+    author    = {Oh, Gyeongrok and Jang, Youngdong and Choi, Jonghyun and Kang, Suk-Ju and Lin, Guang and Kim, Sangpil},
+    journal   = {arXiv preprint arXiv:2512.18991},
+    year      = {2025}
+}
+
+% --- Datasets and Tools ---
+
+@InProceedings{Behley_2019_ICCV,
+    author    = {Behley, Jens and Garbade, Martin and Milioto, Andres and Quenzel, Jan and Behnke, Sven and Stachniss, Cyrill and Gall, J\"{u}rgen},
+    title     = {Semantic{KITTI}: A Dataset for Semantic Scene Understanding of {LiDAR} Sequences},
+    booktitle = {Proceedings of the IEEE/CVF International Conference on Computer Vision (ICCV)},
+    month     = {October},
+    year      = {2019},
+    pages     = {9297--9307}
+}
+
+@article{pedregosa2011scikit,
+    title     = {Scikit-learn: Machine Learning in {Python}},
+    author    = {Pedregosa, Fabian and Varoquaux, Ga\"{e}l and Gramfort, Alexandre and Michel, Vincent and Thirion, Bertrand and Grisel, Olivier and Blondel, Mathieu and Prettenhofer, Peter and Weiss, Ron and Dubourg, Vincent and Vanderplas, Jake and Passos, Alexandre and Cournapeau, David and Brucher, Matthieu and Perrot, Matthieu and Duchesnay, \'{E}douard},
+    journal   = {Journal of Machine Learning Research},
+    volume    = {12},
+    pages     = {2825--2830},
+    year      = {2011}
+}
+
+@article{vanderwalt2014scikit,
+    title     = {scikit-image: image processing in {Python}},
+    author    = {van der Walt, St\'{e}fan and Sch\"{o}nberger, Johannes L. and Nunez-Iglesias, Juan and Boulogne, Fran\c{c}ois and Warner, Joshua D. and Yager, Neil and Gouillart, Emmanuelle and Yu, Tony and the scikit-image contributors},
+    journal   = {PeerJ},
+    volume    = {2},
+    pages     = {e453},
+    year      = {2014},
+    doi       = {10.7717/peerj.453}
 }
 
 % ================================================================
-% PLACEHOLDER citations - REQUIRE HUMAN VERIFICATION before submission
+% VERIFIED citations (web search confirmed)
 % ================================================================
-% The following references have NOT been programmatically verified.
-% They must be confirmed to exist before the paper is submitted.
 
-@article{PLACEHOLDER_lidar_instance_survey,
-    author  = {PLACEHOLDER},
-    title   = {PLACEHOLDER - Survey of LiDAR instance segmentation methods},
-    year    = {2024},
-    note    = {TODO: Verify existence and fill in correct citation}
+@inproceedings{sinhamahapatra2025zprod,
+    author    = {Sinhamahapatra, Poulami and Bose, Shirsha and Roscher, Karsten and G\"{u}nnemann, Stephan},
+    title     = {Zero-Shot Open-Vocabulary {OOD} Object Detection and Grounding using Vision Language Models},
+    booktitle = {Proceedings of the 6th Northern Lights Deep Learning Conference (NLDL)},
+    series    = {Proceedings of Machine Learning Research},
+    volume    = {265},
+    pages     = {230--238},
+    year      = {2025},
+    publisher = {PMLR}
 }
 
-@article{PLACEHOLDER_pointsam,
-    author  = {PLACEHOLDER},
-    title   = {PLACEHOLDER - Point-SAM: SAM distillation for 3D point clouds},
-    year    = {2024},
-    note    = {TODO: Verify existence and fill in correct citation}
+@article{cheng2024open3dworld,
+    author  = {Cheng, Xinlong and Li, Lei},
+    title   = {Open {3D} World in Autonomous Driving},
+    journal = {arXiv preprint arXiv:2408.10880},
+    year    = {2024}
 }
 
-@article{PLACEHOLDER_sam3d_survey,
-    author  = {PLACEHOLDER},
-    title   = {PLACEHOLDER - Survey of SAM extensions to 3D},
-    year    = {2024},
-    note    = {TODO: Verify existence and fill in correct citation}
-}
-
-@article{PLACEHOLDER_sa3d,
-    author  = {PLACEHOLDER},
-    title   = {PLACEHOLDER - SA3D: Segment Anything in 3D Gaussians},
-    year    = {2024},
-    note    = {TODO: Verify existence and fill in correct citation}
-}
-
-@article{PLACEHOLDER_clip,
-    author  = {Radford, Alec and Kim, Jong Wook and Hallacy, Chris and Ramesh, Aditya and Goh, Gabriel and Agarwal, Sandhini and Sastry, Girish and Askell, Amanda and Mishkin, Pamela and Clark, Jack and Krueger, Gretchen and Sutskever, Ilya},
-    title   = {Learning Transferable Visual Models From Natural Language Supervision},
-    journal = {arXiv preprint arXiv:2103.00020},
-    year    = {2021},
-    note    = {TODO: Verify - widely known paper, exact details need confirmation}
-}
-
-@article{PLACEHOLDER_openvoc_det,
-    author  = {PLACEHOLDER},
-    title   = {PLACEHOLDER - Open-vocabulary 3D detection with VLMs},
-    year    = {2025},
-    note    = {TODO: Verify existence and fill in correct citation}
-}
-
-@article{PLACEHOLDER_zprod,
-    author  = {PLACEHOLDER},
-    title   = {PLACEHOLDER - zPROD: Zero-shot OOD detection for autonomous driving},
-    year    = {2025},
-    note    = {TODO: Verify existence and fill in correct citation}
-}
-
-@article{PLACEHOLDER_icp4d,
-    author  = {PLACEHOLDER},
-    title   = {PLACEHOLDER - ICP-4D: Bridging ICP and LiDAR Panoptic Segmentation},
-    year    = {2025},
-    note    = {TODO: Verify at arXiv:2512.18991}
-}
-
-@article{PLACEHOLDER_skimage,
-    author  = {van der Walt, Stefan and Sch\"{o}nberger, Johannes L. and Nunez-Iglesias, Juan and Boulogne, Fran\c{c}ois and Warner, Joshua D. and Yager, Neil and Gouillart, Emmanuelle and Yu, Tony},
-    title   = {scikit-image: image processing in {Python}},
-    journal = {PeerJ},
-    year    = {2014},
-    note    = {TODO: Verify - scikit-image paper, likely published in PeerJ}
+@inproceedings{dusi2025lidar,
+    author    = {Dusi, Aditya and Helou, Bassam},
+    title     = {{LiDAR} Panoptic Segmentation for Autonomous Driving: A Survey},
+    booktitle = {Electronic Imaging},
+    year      = {2025},
+    doi       = {10.2352/EI.2025.37.15.AVM-115}
 }
