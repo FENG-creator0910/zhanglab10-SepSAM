@@ -1,0 +1,2053 @@
+{
+  "description": "Controlled semantic vs class-agnostic mIoU comparison on same 100 frames",
+  "num_frames": 100,
+  "num_gt_instances": 1138,
+  "semantic_miou_per_frame_mean": 0.2984745849622442,
+  "semantic_miou_per_frame_median": 0.2689484432955528,
+  "semantic_miou_per_frame_std": 0.17341162015302153,
+  "agnostic_miou_per_frame_mean": 0.3016565370846717,
+  "agnostic_miou_per_frame_median": 0.29775072662906954,
+  "agnostic_miou_per_frame_std": 0.12233447669402112,
+  "agnostic_raw_global_mean": 0.30874425260183436,
+  "agnostic_raw_global_median": 0.16975169741914023,
+  "gap_semantic_minus_agnostic_pp": -0.31819521224275005,
+  "per_class": {
+    "car": {
+      "count": 941,
+      "mean_iou": 0.3160034873687321,
+      "median_iou": 0.2222222222222222
+    },
+    "bicycle": {
+      "count": 64,
+      "mean_iou": 0.15035983738616532,
+      "median_iou": 0.012316137936606585
+    },
+    "person": {
+      "count": 25,
+      "mean_iou": 0.30009476763166754,
+      "median_iou": 0.035849056603773584
+    },
+    "other-vehicle": {
+      "count": 71,
+      "mean_iou": 0.3733768027696851,
+      "median_iou": 0.2691176470588235
+    },
+    "motorcycle": {
+      "count": 26,
+      "mean_iou": 0.23021605430986386,
+      "median_iou": 0.005879557206755916
+    },
+    "motorcyclist": {
+      "count": 4,
+      "mean_iou": 0.5651942937650455,
+      "median_iou": 0.6282282282282282
+    },
+    "truck": {
+      "count": 7,
+      "mean_iou": 0.301447354234294,
+      "median_iou": 0.2349624060150376
+    }
+  },
+  "per_frame": [
+    {
+      "frame": "000000",
+      "semantic_miou": 0.5724698553256428,
+      "agnostic_miou": 0.591368282079857,
+      "n_instances": 6,
+      "per_class": {
+        "car": {
+          "count": 4,
+          "mean_iou": 0.6102667088340713,
+          "median_iou": 0.5519713261648745
+        },
+        "bicycle": {
+          "count": 1,
+          "mean_iou": 0.25,
+          "median_iou": 0.25
+        },
+        "person": {
+          "count": 1,
+          "mean_iou": 0.8571428571428571,
+          "median_iou": 0.8571428571428571
+        }
+      }
+    },
+    {
+      "frame": "000041",
+      "semantic_miou": 0.12648714247968132,
+      "agnostic_miou": 0.20951340543771363,
+      "n_instances": 10,
+      "per_class": {
+        "car": {
+          "count": 6,
+          "mean_iou": 0.3283977600308872,
+          "median_iou": 0.2884498716652407
+        },
+        "bicycle": {
+          "count": 1,
+          "mean_iou": 0.014221754016328681,
+          "median_iou": 0.014221754016328681
+        },
+        "person": {
+          "count": 3,
+          "mean_iou": 0.036841913391828025,
+          "median_iou": 0.013431656570977087
+        }
+      }
+    },
+    {
+      "frame": "000082",
+      "semantic_miou": 0.189670954175034,
+      "agnostic_miou": 0.34268388614680917,
+      "n_instances": 9,
+      "per_class": {
+        "car": {
+          "count": 6,
+          "mean_iou": 0.48987762912459004,
+          "median_iou": 0.4310419636769355
+        },
+        "bicycle": {
+          "count": 2,
+          "mean_iou": 0.0657539671732302,
+          "median_iou": 0.0657539671732302
+        },
+        "person": {
+          "count": 1,
+          "mean_iou": 0.013381266227281806,
+          "median_iou": 0.013381266227281806
+        }
+      }
+    },
+    {
+      "frame": "000123",
+      "semantic_miou": 0.15184329530211838,
+      "agnostic_miou": 0.15184329530211838,
+      "n_instances": 3,
+      "per_class": {
+        "car": {
+          "count": 3,
+          "mean_iou": 0.15184329530211838,
+          "median_iou": 0.010908150064683052
+        }
+      }
+    },
+    {
+      "frame": "000164",
+      "semantic_miou": 0.13604005774089856,
+      "agnostic_miou": 0.13604005774089856,
+      "n_instances": 11,
+      "per_class": {
+        "car": {
+          "count": 11,
+          "mean_iou": 0.13604005774089856,
+          "median_iou": 0.0155668358714044
+        }
+      }
+    },
+    {
+      "frame": "000205",
+      "semantic_miou": 0.3299007954307587,
+      "agnostic_miou": 0.3299007954307587,
+      "n_instances": 4,
+      "per_class": {
+        "car": {
+          "count": 4,
+          "mean_iou": 0.3299007954307587,
+          "median_iou": 0.42500000000000004
+        }
+      }
+    },
+    {
+      "frame": "000246",
+      "semantic_miou": 0.021248339973439574,
+      "agnostic_miou": 0.021248339973439574,
+      "n_instances": 1,
+      "per_class": {
+        "car": {
+          "count": 1,
+          "mean_iou": 0.021248339973439574,
+          "median_iou": 0.021248339973439574
+        }
+      }
+    },
+    {
+      "frame": "000287",
+      "semantic_miou": 0.32028585516947855,
+      "agnostic_miou": 0.3998682946369614,
+      "n_instances": 5,
+      "per_class": {
+        "car": {
+          "count": 4,
+          "mean_iou": 0.45292325428194996,
+          "median_iou": 0.42971014492753623
+        },
+        "other-vehicle": {
+          "count": 1,
+          "mean_iou": 0.1876484560570071,
+          "median_iou": 0.1876484560570071
+        }
+      }
+    },
+    {
+      "frame": "000328",
+      "semantic_miou": 0.5132019566052024,
+      "agnostic_miou": 0.2870696155785232,
+      "n_instances": 7,
+      "per_class": {
+        "car": {
+          "count": 6,
+          "mean_iou": 0.19661667916785155,
+          "median_iou": 0.07980441192519483
+        },
+        "other-vehicle": {
+          "count": 1,
+          "mean_iou": 0.8297872340425532,
+          "median_iou": 0.8297872340425532
+        }
+      }
+    },
+    {
+      "frame": "000370",
+      "semantic_miou": 0.06337413708631845,
+      "agnostic_miou": 0.093403176677143,
+      "n_instances": 6,
+      "per_class": {
+        "car": {
+          "count": 4,
+          "mean_iou": 0.12343221626796755,
+          "median_iou": 0.003274688946191505
+        },
+        "motorcycle": {
+          "count": 1,
+          "mean_iou": 0.0,
+          "median_iou": 0.0
+        },
+        "other-vehicle": {
+          "count": 1,
+          "mean_iou": 0.06669019499098781,
+          "median_iou": 0.06669019499098781
+        }
+      }
+    },
+    {
+      "frame": "000411",
+      "semantic_miou": 0.38297922842179927,
+      "agnostic_miou": 0.5176004939608073,
+      "n_instances": 7,
+      "per_class": {
+        "car": {
+          "count": 5,
+          "mean_iou": 0.6185664431150635,
+          "median_iou": 0.75
+        },
+        "bicycle": {
+          "count": 1,
+          "mean_iou": 0.0049475133367750815,
+          "median_iou": 0.0049475133367750815
+        },
+        "other-vehicle": {
+          "count": 1,
+          "mean_iou": 0.5254237288135594,
+          "median_iou": 0.5254237288135594
+        }
+      }
+    },
+    {
+      "frame": "000452",
+      "semantic_miou": 0.6689916269417471,
+      "agnostic_miou": 0.5654721892533205,
+      "n_instances": 8,
+      "per_class": {
+        "car": {
+          "count": 7,
+          "mean_iou": 0.5309657100238451,
+          "median_iou": 0.6923076923076923
+        },
+        "bicycle": {
+          "count": 1,
+          "mean_iou": 0.8070175438596491,
+          "median_iou": 0.8070175438596491
+        }
+      }
+    },
+    {
+      "frame": "000493",
+      "semantic_miou": 0.6848877450993572,
+      "agnostic_miou": 0.43812513850988777,
+      "n_instances": 11,
+      "per_class": {
+        "car": {
+          "count": 10,
+          "mean_iou": 0.3832890037122279,
+          "median_iou": 0.2948875230282452
+        },
+        "other-vehicle": {
+          "count": 1,
+          "mean_iou": 0.9864864864864865,
+          "median_iou": 0.9864864864864865
+        }
+      }
+    },
+    {
+      "frame": "000534",
+      "semantic_miou": 0.43841213952992414,
+      "agnostic_miou": 0.3779836195093071,
+      "n_instances": 14,
+      "per_class": {
+        "car": {
+          "count": 10,
+          "mean_iou": 0.33266222949384433,
+          "median_iou": 0.1904329199033382
+        },
+        "bicycle": {
+          "count": 2,
+          "mean_iou": 0.5350241545893719,
+          "median_iou": 0.5350241545893719
+        },
+        "other-vehicle": {
+          "count": 2,
+          "mean_iou": 0.4475500345065562,
+          "median_iou": 0.4475500345065562
+        }
+      }
+    },
+    {
+      "frame": "000575",
+      "semantic_miou": 0.18191669723517478,
+      "agnostic_miou": 0.24885617556462059,
+      "n_instances": 16,
+      "per_class": {
+        "car": {
+          "count": 14,
+          "mean_iou": 0.2711693350077692,
+          "median_iou": 0.09983509688058265
+        },
+        "other-vehicle": {
+          "count": 2,
+          "mean_iou": 0.0926640594625804,
+          "median_iou": 0.0926640594625804
+        }
+      }
+    },
+    {
+      "frame": "000616",
+      "semantic_miou": 0.1844938158397293,
+      "agnostic_miou": 0.33596037491106334,
+      "n_instances": 12,
+      "per_class": {
+        "car": {
+          "count": 11,
+          "mean_iou": 0.36625368672533015,
+          "median_iou": 0.3076923076923077
+        },
+        "other-vehicle": {
+          "count": 1,
+          "mean_iou": 0.00273394495412844,
+          "median_iou": 0.00273394495412844
+        }
+      }
+    },
+    {
+      "frame": "000657",
+      "semantic_miou": 0.27582842407268376,
+      "agnostic_miou": 0.3943595000114997,
+      "n_instances": 13,
+      "per_class": {
+        "car": {
+          "count": 7,
+          "mean_iou": 0.5267152099633379,
+          "median_iou": 0.48
+        },
+        "bicycle": {
+          "count": 5,
+          "mean_iou": 0.28472424203785446,
+          "median_iou": 0.003480058826098985
+        },
+        "other-vehicle": {
+          "count": 1,
+          "mean_iou": 0.01604582021685904,
+          "median_iou": 0.01604582021685904
+        }
+      }
+    },
+    {
+      "frame": "000698",
+      "semantic_miou": 0.4691944263157314,
+      "agnostic_miou": 0.4790897008498347,
+      "n_instances": 10,
+      "per_class": {
+        "car": {
+          "count": 6,
+          "mean_iou": 0.48336115210930225,
+          "median_iou": 0.4391891891891892
+        },
+        "bicycle": {
+          "count": 1,
+          "mean_iou": 0.00026967713137925905,
+          "median_iou": 0.00026967713137925905
+        },
+        "other-vehicle": {
+          "count": 2,
+          "mean_iou": 0.4973135426889107,
+          "median_iou": 0.4973135426889107
+        },
+        "person": {
+          "count": 1,
+          "mean_iou": 0.8958333333333334,
+          "median_iou": 0.8958333333333334
+        }
+      }
+    },
+    {
+      "frame": "000740",
+      "semantic_miou": 0.4938955294218452,
+      "agnostic_miou": 0.3562279095173832,
+      "n_instances": 4,
+      "per_class": {
+        "car": {
+          "count": 3,
+          "mean_iou": 0.21856028961292118,
+          "median_iou": 0.2722222222222222
+        },
+        "bicycle": {
+          "count": 1,
+          "mean_iou": 0.7692307692307693,
+          "median_iou": 0.7692307692307693
+        }
+      }
+    },
+    {
+      "frame": "000781",
+      "semantic_miou": 0.1313935176197299,
+      "agnostic_miou": 0.29487450343635097,
+      "n_instances": 9,
+      "per_class": {
+        "car": {
+          "count": 7,
+          "mean_iou": 0.37661499634466156,
+          "median_iou": 0.4666666666666667
+        },
+        "bicycle": {
+          "count": 1,
+          "mean_iou": 0.002351172005537786,
+          "median_iou": 0.002351172005537786
+        },
+        "other-vehicle": {
+          "count": 1,
+          "mean_iou": 0.015214384508990318,
+          "median_iou": 0.015214384508990318
+        }
+      }
+    },
+    {
+      "frame": "000822",
+      "semantic_miou": 0.2632076825287131,
+      "agnostic_miou": 0.29864251606394965,
+      "n_instances": 11,
+      "per_class": {
+        "car": {
+          "count": 8,
+          "mean_iou": 0.28534852900127605,
+          "median_iou": 0.17360248447204968
+        },
+        "bicycle": {
+          "count": 1,
+          "mean_iou": 0.006269592476489028,
+          "median_iou": 0.006269592476489028
+        },
+        "other-vehicle": {
+          "count": 2,
+          "mean_iou": 0.4980049261083744,
+          "median_iou": 0.4980049261083744
+        }
+      }
+    },
+    {
+      "frame": "000863",
+      "semantic_miou": 0.20389401058812515,
+      "agnostic_miou": 0.33299597721925345,
+      "n_instances": 14,
+      "per_class": {
+        "car": {
+          "count": 13,
+          "mean_iou": 0.3545129716577748,
+          "median_iou": 0.265491452991453
+        },
+        "other-vehicle": {
+          "count": 1,
+          "mean_iou": 0.05327504951847552,
+          "median_iou": 0.05327504951847552
+        }
+      }
+    },
+    {
+      "frame": "000904",
+      "semantic_miou": 0.08530884742117828,
+      "agnostic_miou": 0.15617407560107605,
+      "n_instances": 13,
+      "per_class": {
+        "car": {
+          "count": 12,
+          "mean_iou": 0.16905866254287563,
+          "median_iou": 0.028218484620604906
+        },
+        "bicycle": {
+          "count": 1,
+          "mean_iou": 0.0015590322994809339,
+          "median_iou": 0.0015590322994809339
+        }
+      }
+    },
+    {
+      "frame": "000945",
+      "semantic_miou": 0.22431622339289575,
+      "agnostic_miou": 0.3336675032303691,
+      "n_instances": 12,
+      "per_class": {
+        "car": {
+          "count": 9,
+          "mean_iou": 0.44301878306784237,
+          "median_iou": 0.3625662154208358
+        },
+        "bicycle": {
+          "count": 3,
+          "mean_iou": 0.005613663717949119,
+          "median_iou": 0.00542805018131039
+        }
+      }
+    },
+    {
+      "frame": "000986",
+      "semantic_miou": 0.3270653295363874,
+      "agnostic_miou": 0.2698686037008808,
+      "n_instances": 10,
+      "per_class": {
+        "car": {
+          "count": 5,
+          "mean_iou": 0.1248081841432225,
+          "median_iou": 0.0
+        },
+        "bicycle": {
+          "count": 1,
+          "mean_iou": 0.005714285714285714,
+          "median_iou": 0.005714285714285714
+        },
+        "motorcycle": {
+          "count": 1,
+          "mean_iou": 0.7321428571428571,
+          "median_iou": 0.7321428571428571
+        },
+        "other-vehicle": {
+          "count": 3,
+          "mean_iou": 0.4455959911451843,
+          "median_iou": 0.42424242424242425
+        }
+      }
+    },
+    {
+      "frame": "001027",
+      "semantic_miou": 0.4301045452496533,
+      "agnostic_miou": 0.5166663898917784,
+      "n_instances": 9,
+      "per_class": {
+        "car": {
+          "count": 5,
+          "mean_iou": 0.46952830088956266,
+          "median_iou": 0.5367483296213809
+        },
+        "motorcycle": {
+          "count": 1,
+          "mean_iou": 0.08,
+          "median_iou": 0.08
+        },
+        "other-vehicle": {
+          "count": 3,
+          "mean_iou": 0.7407853348593975,
+          "median_iou": 0.6991404011461319
+        }
+      }
+    },
+    {
+      "frame": "001068",
+      "semantic_miou": 0.0717686451872741,
+      "agnostic_miou": 0.0717686451872741,
+      "n_instances": 8,
+      "per_class": {
+        "car": {
+          "count": 4,
+          "mean_iou": 0.011631583032794341,
+          "median_iou": 0.013126722704389622
+        },
+        "other-vehicle": {
+          "count": 4,
+          "mean_iou": 0.13190570734175386,
+          "median_iou": 0.08603363690572992
+        }
+      }
+    },
+    {
+      "frame": "001110",
+      "semantic_miou": 0.29856761828237766,
+      "agnostic_miou": 0.2670211663510409,
+      "n_instances": 10,
+      "per_class": {
+        "car": {
+          "count": 8,
+          "mean_iou": 0.2459901983968164,
+          "median_iou": 0.1303429202685269
+        },
+        "other-vehicle": {
+          "count": 2,
+          "mean_iou": 0.3511450381679389,
+          "median_iou": 0.3511450381679389
+        }
+      }
+    },
+    {
+      "frame": "001151",
+      "semantic_miou": 0.37378535451266803,
+      "agnostic_miou": 0.4345415710451303,
+      "n_instances": 13,
+      "per_class": {
+        "car": {
+          "count": 10,
+          "mean_iou": 0.48661832807295513,
+          "median_iou": 0.6267632481890965
+        },
+        "bicycle": {
+          "count": 3,
+          "mean_iou": 0.260952380952381,
+          "median_iou": 0.34285714285714286
+        }
+      }
+    },
+    {
+      "frame": "001192",
+      "semantic_miou": 0.3470562208210689,
+      "agnostic_miou": 0.3169432628977635,
+      "n_instances": 19,
+      "per_class": {
+        "car": {
+          "count": 13,
+          "mean_iou": 0.38588773565907886,
+          "median_iou": 0.3793103448275862
+        },
+        "bicycle": {
+          "count": 3,
+          "mean_iou": 0.0007071362390877042,
+          "median_iou": 0.0007430934260202553
+        },
+        "motorcycle": {
+          "count": 2,
+          "mean_iou": 0.0016300113861089471,
+          "median_iou": 0.0016300113861089471
+        },
+        "other-vehicle": {
+          "count": 1,
+          "mean_iou": 1.0,
+          "median_iou": 1.0
+        }
+      }
+    },
+    {
+      "frame": "001233",
+      "semantic_miou": 0.11462513096879014,
+      "agnostic_miou": 0.24963489331155675,
+      "n_instances": 17,
+      "per_class": {
+        "car": {
+          "count": 14,
+          "mean_iou": 0.2969804306575579,
+          "median_iou": 0.22306096375131088
+        },
+        "motorcycle": {
+          "count": 1,
+          "mean_iou": 0.007722767406970166,
+          "median_iou": 0.007722767406970166
+        },
+        "other-vehicle": {
+          "count": 2,
+          "mean_iou": 0.039172194841842374,
+          "median_iou": 0.039172194841842374
+        }
+      }
+    },
+    {
+      "frame": "001274",
+      "semantic_miou": 0.7047431855037766,
+      "agnostic_miou": 0.5610994055974905,
+      "n_instances": 15,
+      "per_class": {
+        "car": {
+          "count": 13,
+          "mean_iou": 0.525188460620919,
+          "median_iou": 0.6181474480151229
+        },
+        "motorcycle": {
+          "count": 1,
+          "mean_iou": 1.0,
+          "median_iou": 1.0
+        },
+        "other-vehicle": {
+          "count": 1,
+          "mean_iou": 0.589041095890411,
+          "median_iou": 0.589041095890411
+        }
+      }
+    },
+    {
+      "frame": "001315",
+      "semantic_miou": 0.6327165289641269,
+      "agnostic_miou": 0.4363434918077381,
+      "n_instances": 16,
+      "per_class": {
+        "car": {
+          "count": 15,
+          "mean_iou": 0.40829020078539674,
+          "median_iou": 0.3157894736842105
+        },
+        "other-vehicle": {
+          "count": 1,
+          "mean_iou": 0.8571428571428571,
+          "median_iou": 0.8571428571428571
+        }
+      }
+    },
+    {
+      "frame": "001356",
+      "semantic_miou": 0.35089369698830214,
+      "agnostic_miou": 0.35089369698830214,
+      "n_instances": 5,
+      "per_class": {
+        "car": {
+          "count": 5,
+          "mean_iou": 0.35089369698830214,
+          "median_iou": 0.2641509433962264
+        }
+      }
+    },
+    {
+      "frame": "001397",
+      "semantic_miou": 0.45436841004727024,
+      "agnostic_miou": 0.3139760371057596,
+      "n_instances": 14,
+      "per_class": {
+        "car": {
+          "count": 11,
+          "mean_iou": 0.2578190879291553,
+          "median_iou": 0.0843520782396088
+        },
+        "bicycle": {
+          "count": 1,
+          "mean_iou": 0.6666666666666666,
+          "median_iou": 0.6666666666666666
+        },
+        "other-vehicle": {
+          "count": 1,
+          "mean_iou": 0.004098996704370133,
+          "median_iou": 0.004098996704370133
+        },
+        "motorcyclist": {
+          "count": 1,
+          "mean_iou": 0.8888888888888888,
+          "median_iou": 0.8888888888888888
+        }
+      }
+    },
+    {
+      "frame": "001438",
+      "semantic_miou": 0.08021842758672998,
+      "agnostic_miou": 0.21389071277463917,
+      "n_instances": 9,
+      "per_class": {
+        "car": {
+          "count": 5,
+          "mean_iou": 0.38098106925952563,
+          "median_iou": 0.5238095238095238
+        },
+        "bicycle": {
+          "count": 1,
+          "mean_iou": 0.005071954535732837,
+          "median_iou": 0.005071954535732837
+        },
+        "other-vehicle": {
+          "count": 1,
+          "mean_iou": 0.008216926869350863,
+          "median_iou": 0.008216926869350863
+        },
+        "person": {
+          "count": 1,
+          "mean_iou": 0.002501468665314863,
+          "median_iou": 0.002501468665314863
+        },
+        "motorcyclist": {
+          "count": 1,
+          "mean_iou": 0.004320718603725672,
+          "median_iou": 0.004320718603725672
+        }
+      }
+    },
+    {
+      "frame": "001480",
+      "semantic_miou": 0.43477427941683566,
+      "agnostic_miou": 0.42344784249465917,
+      "n_instances": 9,
+      "per_class": {
+        "car": {
+          "count": 6,
+          "mean_iou": 0.414386692956918,
+          "median_iou": 0.42641509433962266
+        },
+        "bicycle": {
+          "count": 1,
+          "mean_iou": 0.6428571428571429,
+          "median_iou": 0.6428571428571429
+        },
+        "person": {
+          "count": 1,
+          "mean_iou": 0.3142857142857143,
+          "median_iou": 0.3142857142857143
+        },
+        "motorcyclist": {
+          "count": 1,
+          "mean_iou": 0.3675675675675676,
+          "median_iou": 0.3675675675675676
+        }
+      }
+    },
+    {
+      "frame": "001521",
+      "semantic_miou": 0.7708161913441548,
+      "agnostic_miou": 0.6163798574357843,
+      "n_instances": 6,
+      "per_class": {
+        "car": {
+          "count": 3,
+          "mean_iou": 0.3075071896190432,
+          "median_iou": 0.014779368919181395
+        },
+        "other-vehicle": {
+          "count": 1,
+          "mean_iou": 0.8666666666666667,
+          "median_iou": 0.8666666666666667
+        },
+        "person": {
+          "count": 1,
+          "mean_iou": 0.9090909090909091,
+          "median_iou": 0.9090909090909091
+        },
+        "motorcyclist": {
+          "count": 1,
+          "mean_iou": 1.0,
+          "median_iou": 1.0
+        }
+      }
+    },
+    {
+      "frame": "001562",
+      "semantic_miou": 0.5522628751581524,
+      "agnostic_miou": 0.5522628751581524,
+      "n_instances": 2,
+      "per_class": {
+        "car": {
+          "count": 2,
+          "mean_iou": 0.5522628751581524,
+          "median_iou": 0.5522628751581524
+        }
+      }
+    },
+    {
+      "frame": "001603",
+      "semantic_miou": 0.4625,
+      "agnostic_miou": 0.4625,
+      "n_instances": 2,
+      "per_class": {
+        "car": {
+          "count": 2,
+          "mean_iou": 0.4625,
+          "median_iou": 0.4625
+        }
+      }
+    },
+    {
+      "frame": "001644",
+      "semantic_miou": 0.19220374955783515,
+      "agnostic_miou": 0.19220374955783515,
+      "n_instances": 2,
+      "per_class": {
+        "car": {
+          "count": 2,
+          "mean_iou": 0.19220374955783515,
+          "median_iou": 0.19220374955783515
+        }
+      }
+    },
+    {
+      "frame": "001685",
+      "semantic_miou": 0.21740686585781396,
+      "agnostic_miou": 0.21740686585781396,
+      "n_instances": 4,
+      "per_class": {
+        "car": {
+          "count": 4,
+          "mean_iou": 0.21740686585781396,
+          "median_iou": 0.12599020230386318
+        }
+      }
+    },
+    {
+      "frame": "001726",
+      "semantic_miou": 0.24334208668585933,
+      "agnostic_miou": 0.24334208668585933,
+      "n_instances": 12,
+      "per_class": {
+        "car": {
+          "count": 12,
+          "mean_iou": 0.24334208668585933,
+          "median_iou": 0.028393989678108873
+        }
+      }
+    },
+    {
+      "frame": "001767",
+      "semantic_miou": 0.050975870969339726,
+      "agnostic_miou": 0.050975870969339726,
+      "n_instances": 6,
+      "per_class": {
+        "car": {
+          "count": 6,
+          "mean_iou": 0.050975870969339726,
+          "median_iou": 0.00016101331043366253
+        }
+      }
+    },
+    {
+      "frame": "001808",
+      "semantic_miou": 0.19371214906106735,
+      "agnostic_miou": 0.2668033528196185,
+      "n_instances": 8,
+      "per_class": {
+        "car": {
+          "count": 4,
+          "mean_iou": 0.48607696409527196,
+          "median_iou": 0.5591539281905439
+        },
+        "bicycle": {
+          "count": 2,
+          "mean_iou": 0.08827020915771622,
+          "median_iou": 0.08827020915771622
+        },
+        "person": {
+          "count": 2,
+          "mean_iou": 0.006789273930213871,
+          "median_iou": 0.006789273930213871
+        }
+      }
+    },
+    {
+      "frame": "001850",
+      "semantic_miou": 0.10662711446358819,
+      "agnostic_miou": 0.1903445591104554,
+      "n_instances": 10,
+      "per_class": {
+        "car": {
+          "count": 6,
+          "mean_iou": 0.3159207260807562,
+          "median_iou": 0.30145998558038933
+        },
+        "bicycle": {
+          "count": 2,
+          "mean_iou": 0.0018375277801919473,
+          "median_iou": 0.0018375277801919473
+        },
+        "person": {
+          "count": 2,
+          "mean_iou": 0.0021230895298163716,
+          "median_iou": 0.0021230895298163716
+        }
+      }
+    },
+    {
+      "frame": "001891",
+      "semantic_miou": 0.5334402375224023,
+      "agnostic_miou": 0.4007244063110756,
+      "n_instances": 15,
+      "per_class": {
+        "car": {
+          "count": 12,
+          "mean_iou": 0.38102246695317193,
+          "median_iou": 0.40783943329397876
+        },
+        "bicycle": {
+          "count": 2,
+          "mean_iou": 0.21929824561403508,
+          "median_iou": 0.21929824561403508
+        },
+        "person": {
+          "count": 1,
+          "mean_iou": 1.0,
+          "median_iou": 1.0
+        }
+      }
+    },
+    {
+      "frame": "001932",
+      "semantic_miou": 0.13798364168128632,
+      "agnostic_miou": 0.3142945788220767,
+      "n_instances": 24,
+      "per_class": {
+        "car": {
+          "count": 22,
+          "mean_iou": 0.33948185555647525,
+          "median_iou": 0.2520718536477849
+        },
+        "bicycle": {
+          "count": 1,
+          "mean_iou": 0.0020053013714417425,
+          "median_iou": 0.0020053013714417425
+        },
+        "other-vehicle": {
+          "count": 1,
+          "mean_iou": 0.07246376811594203,
+          "median_iou": 0.07246376811594203
+        }
+      }
+    },
+    {
+      "frame": "001973",
+      "semantic_miou": 0.4765109077976197,
+      "agnostic_miou": 0.5323641421634091,
+      "n_instances": 19,
+      "per_class": {
+        "car": {
+          "count": 17,
+          "mean_iou": 0.5428366236069946,
+          "median_iou": 0.635593220338983
+        },
+        "bicycle": {
+          "count": 1,
+          "mean_iou": 0.022289320124847332,
+          "median_iou": 0.022289320124847332
+        },
+        "other-vehicle": {
+          "count": 1,
+          "mean_iou": 0.864406779661017,
+          "median_iou": 0.864406779661017
+        }
+      }
+    },
+    {
+      "frame": "002014",
+      "semantic_miou": 0.35582061858728603,
+      "agnostic_miou": 0.35582061858728603,
+      "n_instances": 7,
+      "per_class": {
+        "car": {
+          "count": 7,
+          "mean_iou": 0.35582061858728603,
+          "median_iou": 0.16
+        }
+      }
+    },
+    {
+      "frame": "002055",
+      "semantic_miou": 0.34899541634301817,
+      "agnostic_miou": 0.2554207137308883,
+      "n_instances": 7,
+      "per_class": {
+        "car": {
+          "count": 6,
+          "mean_iou": 0.2179908326860364,
+          "median_iou": 0.026893975487391347
+        },
+        "other-vehicle": {
+          "count": 1,
+          "mean_iou": 0.48,
+          "median_iou": 0.48
+        }
+      }
+    },
+    {
+      "frame": "002096",
+      "semantic_miou": 0.1372426147706514,
+      "agnostic_miou": 0.21791255853089675,
+      "n_instances": 9,
+      "per_class": {
+        "car": {
+          "count": 6,
+          "mean_iou": 0.30928405503543505,
+          "median_iou": 0.21303931881677485
+        },
+        "motorcycle": {
+          "count": 1,
+          "mean_iou": 0.09937888198757763,
+          "median_iou": 0.09937888198757763
+        },
+        "other-vehicle": {
+          "count": 2,
+          "mean_iou": 0.003064907288941509,
+          "median_iou": 0.003064907288941509
+        }
+      }
+    },
+    {
+      "frame": "002137",
+      "semantic_miou": 0.048554149205432835,
+      "agnostic_miou": 0.0886231448435396,
+      "n_instances": 11,
+      "per_class": {
+        "car": {
+          "count": 7,
+          "mean_iou": 0.13670593960926766,
+          "median_iou": 0.03021319030806134
+        },
+        "motorcycle": {
+          "count": 2,
+          "mean_iou": 0.008007921401073722,
+          "median_iou": 0.008007921401073722
+        },
+        "other-vehicle": {
+          "count": 2,
+          "mean_iou": 0.0009485866059571238,
+          "median_iou": 0.0009485866059571238
+        }
+      }
+    },
+    {
+      "frame": "002178",
+      "semantic_miou": 0.09500624381432153,
+      "agnostic_miou": 0.19001248762864306,
+      "n_instances": 12,
+      "per_class": {
+        "car": {
+          "count": 8,
+          "mean_iou": 0.2850187314429646,
+          "median_iou": 0.2859850946992326
+        },
+        "motorcycle": {
+          "count": 2,
+          "mean_iou": 0.0,
+          "median_iou": 0.0
+        },
+        "other-vehicle": {
+          "count": 2,
+          "mean_iou": 0.0,
+          "median_iou": 0.0
+        }
+      }
+    },
+    {
+      "frame": "002220",
+      "semantic_miou": 0.16742643314171182,
+      "agnostic_miou": 0.16742643314171182,
+      "n_instances": 9,
+      "per_class": {
+        "car": {
+          "count": 9,
+          "mean_iou": 0.16742643314171182,
+          "median_iou": 0.011633771561144549
+        }
+      }
+    },
+    {
+      "frame": "002261",
+      "semantic_miou": 0.4186909901061721,
+      "agnostic_miou": 0.3521654365566766,
+      "n_instances": 11,
+      "per_class": {
+        "car": {
+          "count": 10,
+          "mean_iou": 0.3373819802123442,
+          "median_iou": 0.0807720656252595
+        },
+        "person": {
+          "count": 1,
+          "mean_iou": 0.5,
+          "median_iou": 0.5
+        }
+      }
+    },
+    {
+      "frame": "002302",
+      "semantic_miou": 0.0951732578396398,
+      "agnostic_miou": 0.1743912022379114,
+      "n_instances": 12,
+      "per_class": {
+        "car": {
+          "count": 11,
+          "mean_iou": 0.19023479111756575,
+          "median_iou": 0.10650887573964497
+        },
+        "person": {
+          "count": 1,
+          "mean_iou": 0.00011172456171385478,
+          "median_iou": 0.00011172456171385478
+        }
+      }
+    },
+    {
+      "frame": "002343",
+      "semantic_miou": 0.5418766618551515,
+      "agnostic_miou": 0.27094471260261394,
+      "n_instances": 13,
+      "per_class": {
+        "car": {
+          "count": 12,
+          "mean_iou": 0.22168435819306162,
+          "median_iou": 0.07123586624050589
+        },
+        "other-vehicle": {
+          "count": 1,
+          "mean_iou": 0.8620689655172413,
+          "median_iou": 0.8620689655172413
+        }
+      }
+    },
+    {
+      "frame": "002384",
+      "semantic_miou": 0.2566339635137912,
+      "agnostic_miou": 0.2774551533850602,
+      "n_instances": 18,
+      "per_class": {
+        "car": {
+          "count": 11,
+          "mean_iou": 0.24490452975140287,
+          "median_iou": 0.2773186409550046
+        },
+        "bicycle": {
+          "count": 3,
+          "mean_iou": 0.2101235187205224,
+          "median_iou": 0.03364485981308411
+        },
+        "motorcycle": {
+          "count": 1,
+          "mean_iou": 0.02232551962281692,
+          "median_iou": 0.02232551962281692
+        },
+        "other-vehicle": {
+          "count": 3,
+          "mean_iou": 0.5491822859604226,
+          "median_iou": 0.7043478260869566
+        }
+      }
+    },
+    {
+      "frame": "002425",
+      "semantic_miou": 0.13341090209547207,
+      "agnostic_miou": 0.14384698074640204,
+      "n_instances": 11,
+      "per_class": {
+        "car": {
+          "count": 10,
+          "mean_iou": 0.14616610933549762,
+          "median_iou": 0.03490642731904191
+        },
+        "other-vehicle": {
+          "count": 1,
+          "mean_iou": 0.12065569485544654,
+          "median_iou": 0.12065569485544654
+        }
+      }
+    },
+    {
+      "frame": "002466",
+      "semantic_miou": 0.5226718123170819,
+      "agnostic_miou": 0.4148375063573538,
+      "n_instances": 21,
+      "per_class": {
+        "car": {
+          "count": 19,
+          "mean_iou": 0.3894647284844765,
+          "median_iou": 0.40606060606060607
+        },
+        "other-vehicle": {
+          "count": 2,
+          "mean_iou": 0.6558788961496874,
+          "median_iou": 0.6558788961496874
+        }
+      }
+    },
+    {
+      "frame": "002507",
+      "semantic_miou": 0.6754502219931643,
+      "agnostic_miou": 0.39168299929344164,
+      "n_instances": 25,
+      "per_class": {
+        "car": {
+          "count": 22,
+          "mean_iou": 0.3369686825188528,
+          "median_iou": 0.13094121096613398
+        },
+        "other-vehicle": {
+          "count": 2,
+          "mean_iou": 0.6893819834606401,
+          "median_iou": 0.6893819834606401
+        },
+        "person": {
+          "count": 1,
+          "mean_iou": 1.0,
+          "median_iou": 1.0
+        }
+      }
+    },
+    {
+      "frame": "002548",
+      "semantic_miou": 0.1292004629454706,
+      "agnostic_miou": 0.3161998573732537,
+      "n_instances": 23,
+      "per_class": {
+        "car": {
+          "count": 21,
+          "mean_iou": 0.3442497665374211,
+          "median_iou": 0.08021034338783754
+        },
+        "other-vehicle": {
+          "count": 1,
+          "mean_iou": 0.04335162229899072,
+          "median_iou": 0.04335162229899072
+        },
+        "person": {
+          "count": 1,
+          "mean_iou": 0.0,
+          "median_iou": 0.0
+        }
+      }
+    },
+    {
+      "frame": "002590",
+      "semantic_miou": 0.5484663032695574,
+      "agnostic_miou": 0.33256268009097184,
+      "n_instances": 17,
+      "per_class": {
+        "car": {
+          "count": 16,
+          "mean_iou": 0.3037755303338271,
+          "median_iou": 0.024632864458570727
+        },
+        "other-vehicle": {
+          "count": 1,
+          "mean_iou": 0.7931570762052877,
+          "median_iou": 0.7931570762052877
+        }
+      }
+    },
+    {
+      "frame": "002631",
+      "semantic_miou": 0.28085299984077433,
+      "agnostic_miou": 0.251340372129646,
+      "n_instances": 21,
+      "per_class": {
+        "car": {
+          "count": 17,
+          "mean_iou": 0.2595864985536942,
+          "median_iou": 0.04
+        },
+        "bicycle": {
+          "count": 2,
+          "mean_iou": 0.0013518385003604902,
+          "median_iou": 0.0013518385003604902
+        },
+        "motorcycle": {
+          "count": 1,
+          "mean_iou": 0.0021795446619837593,
+          "median_iou": 0.0021795446619837593
+        },
+        "other-vehicle": {
+          "count": 1,
+          "mean_iou": 0.8602941176470589,
+          "median_iou": 0.8602941176470589
+        }
+      }
+    },
+    {
+      "frame": "002672",
+      "semantic_miou": 0.13914849598556248,
+      "agnostic_miou": 0.25020489440268345,
+      "n_instances": 15,
+      "per_class": {
+        "car": {
+          "count": 14,
+          "mean_iou": 0.26729049415916367,
+          "median_iou": 0.11953947013435494
+        },
+        "motorcycle": {
+          "count": 1,
+          "mean_iou": 0.011006497811961278,
+          "median_iou": 0.011006497811961278
+        }
+      }
+    },
+    {
+      "frame": "002713",
+      "semantic_miou": 0.08372792552799087,
+      "agnostic_miou": 0.18837751431912264,
+      "n_instances": 18,
+      "per_class": {
+        "car": {
+          "count": 14,
+          "mean_iou": 0.24075854414426617,
+          "median_iou": 0.06485386158641941
+        },
+        "bicycle": {
+          "count": 3,
+          "mean_iou": 0.004875203642387233,
+          "median_iou": 0.0008691554531650872
+        },
+        "other-vehicle": {
+          "count": 1,
+          "mean_iou": 0.005550028797319232,
+          "median_iou": 0.005550028797319232
+        }
+      }
+    },
+    {
+      "frame": "002754",
+      "semantic_miou": 0.6741777333944488,
+      "agnostic_miou": 0.4935199201100078,
+      "n_instances": 20,
+      "per_class": {
+        "car": {
+          "count": 18,
+          "mean_iou": 0.4483554667888975,
+          "median_iou": 0.45818786186028915
+        },
+        "motorcycle": {
+          "count": 2,
+          "mean_iou": 0.9,
+          "median_iou": 0.9
+        }
+      }
+    },
+    {
+      "frame": "002795",
+      "semantic_miou": 0.12204075579471663,
+      "agnostic_miou": 0.2617404388628991,
+      "n_instances": 15,
+      "per_class": {
+        "car": {
+          "count": 13,
+          "mean_iou": 0.29666535962994467,
+          "median_iou": 0.13437727603787328
+        },
+        "bicycle": {
+          "count": 1,
+          "mean_iou": 0.06542056074766354,
+          "median_iou": 0.06542056074766354
+        },
+        "motorcycle": {
+          "count": 1,
+          "mean_iou": 0.004036347006541666,
+          "median_iou": 0.004036347006541666
+        }
+      }
+    },
+    {
+      "frame": "002836",
+      "semantic_miou": 0.30305061054111904,
+      "agnostic_miou": 0.30305061054111904,
+      "n_instances": 12,
+      "per_class": {
+        "car": {
+          "count": 12,
+          "mean_iou": 0.30305061054111904,
+          "median_iou": 0.14390289654306757
+        }
+      }
+    },
+    {
+      "frame": "002877",
+      "semantic_miou": 0.37113835817066976,
+      "agnostic_miou": 0.37113835817066976,
+      "n_instances": 12,
+      "per_class": {
+        "car": {
+          "count": 12,
+          "mean_iou": 0.37113835817066976,
+          "median_iou": 0.4040373906125696
+        }
+      }
+    },
+    {
+      "frame": "002918",
+      "semantic_miou": 0.36164887223375175,
+      "agnostic_miou": 0.3870025350396844,
+      "n_instances": 12,
+      "per_class": {
+        "car": {
+          "count": 10,
+          "mean_iou": 0.3996793664426507,
+          "median_iou": 0.3041899797007028
+        },
+        "bicycle": {
+          "count": 2,
+          "mean_iou": 0.3236183780248528,
+          "median_iou": 0.3236183780248528
+        }
+      }
+    },
+    {
+      "frame": "002960",
+      "semantic_miou": 0.3386389888949559,
+      "agnostic_miou": 0.20641141500627183,
+      "n_instances": 15,
+      "per_class": {
+        "car": {
+          "count": 10,
+          "mean_iou": 0.21375055972576776,
+          "median_iou": 0.11911989308896526
+        },
+        "bicycle": {
+          "count": 4,
+          "mean_iou": 0.052166406959100055,
+          "median_iou": 0.03629399196371551
+        },
+        "truck": {
+          "count": 1,
+          "mean_iou": 0.75,
+          "median_iou": 0.75
+        }
+      }
+    },
+    {
+      "frame": "003001",
+      "semantic_miou": 0.11868161476293154,
+      "agnostic_miou": 0.19816626694367526,
+      "n_instances": 8,
+      "per_class": {
+        "car": {
+          "count": 7,
+          "mean_iou": 0.22466115100392314,
+          "median_iou": 0.1308139534883721
+        },
+        "truck": {
+          "count": 1,
+          "mean_iou": 0.012702078521939953,
+          "median_iou": 0.012702078521939953
+        }
+      }
+    },
+    {
+      "frame": "003042",
+      "semantic_miou": 0.13994441872681573,
+      "agnostic_miou": 0.2516212114127294,
+      "n_instances": 10,
+      "per_class": {
+        "car": {
+          "count": 9,
+          "mean_iou": 0.27954040958420784,
+          "median_iou": 0.12650602409638553
+        },
+        "truck": {
+          "count": 1,
+          "mean_iou": 0.00034842786942365227,
+          "median_iou": 0.00034842786942365227
+        }
+      }
+    },
+    {
+      "frame": "003083",
+      "semantic_miou": 0.2688397973428984,
+      "agnostic_miou": 0.2968589371941895,
+      "n_instances": 15,
+      "per_class": {
+        "car": {
+          "count": 12,
+          "mean_iou": 0.3270280056464147,
+          "median_iou": 0.2788846298607397
+        },
+        "truck": {
+          "count": 1,
+          "mean_iou": 0.43043478260869567,
+          "median_iou": 0.43043478260869567
+        },
+        "person": {
+          "count": 2,
+          "mean_iou": 0.04905660377358491,
+          "median_iou": 0.04905660377358491
+        }
+      }
+    },
+    {
+      "frame": "003124",
+      "semantic_miou": 0.42144480666219347,
+      "agnostic_miou": 0.3117178302948972,
+      "n_instances": 11,
+      "per_class": {
+        "car": {
+          "count": 10,
+          "mean_iou": 0.28733405776883136,
+          "median_iou": 0.15468544737994452
+        },
+        "person": {
+          "count": 1,
+          "mean_iou": 0.5555555555555556,
+          "median_iou": 0.5555555555555556
+        }
+      }
+    },
+    {
+      "frame": "003165",
+      "semantic_miou": 0.20221436797300693,
+      "agnostic_miou": 0.20221436797300693,
+      "n_instances": 6,
+      "per_class": {
+        "car": {
+          "count": 6,
+          "mean_iou": 0.20221436797300693,
+          "median_iou": 0.13886304150711803
+        }
+      }
+    },
+    {
+      "frame": "003206",
+      "semantic_miou": 0.3688030454684365,
+      "agnostic_miou": 0.3688030454684365,
+      "n_instances": 8,
+      "per_class": {
+        "car": {
+          "count": 8,
+          "mean_iou": 0.3688030454684365,
+          "median_iou": 0.2997481250564742
+        }
+      }
+    },
+    {
+      "frame": "003247",
+      "semantic_miou": 0.22281717014647687,
+      "agnostic_miou": 0.22281717014647687,
+      "n_instances": 8,
+      "per_class": {
+        "car": {
+          "count": 8,
+          "mean_iou": 0.22281717014647687,
+          "median_iou": 0.14601064216987608
+        }
+      }
+    },
+    {
+      "frame": "003288",
+      "semantic_miou": 0.1614473260095066,
+      "agnostic_miou": 0.1614473260095066,
+      "n_instances": 8,
+      "per_class": {
+        "car": {
+          "count": 8,
+          "mean_iou": 0.1614473260095066,
+          "median_iou": 0.09369560281540906
+        }
+      }
+    },
+    {
+      "frame": "003330",
+      "semantic_miou": 0.2438062938494344,
+      "agnostic_miou": 0.20426917463670696,
+      "n_instances": 5,
+      "per_class": {
+        "car": {
+          "count": 4,
+          "mean_iou": 0.17791109516155534,
+          "median_iou": 0.006382466610131186
+        },
+        "other-vehicle": {
+          "count": 1,
+          "mean_iou": 0.30970149253731344,
+          "median_iou": 0.30970149253731344
+        }
+      }
+    },
+    {
+      "frame": "003371",
+      "semantic_miou": 0.3360695292130347,
+      "agnostic_miou": 0.3364425301328646,
+      "n_instances": 5,
+      "per_class": {
+        "car": {
+          "count": 2,
+          "mean_iou": 0.3379345338121845,
+          "median_iou": 0.3379345338121845
+        },
+        "motorcycle": {
+          "count": 1,
+          "mean_iou": 0.0019802537728057664,
+          "median_iou": 0.0019802537728057664
+        },
+        "other-vehicle": {
+          "count": 1,
+          "mean_iou": 0.004363329267148353,
+          "median_iou": 0.004363329267148353
+        },
+        "person": {
+          "count": 1,
+          "mean_iou": 1.0,
+          "median_iou": 1.0
+        }
+      }
+    },
+    {
+      "frame": "003412",
+      "semantic_miou": 0.30968459172863766,
+      "agnostic_miou": 0.3930725186016116,
+      "n_instances": 6,
+      "per_class": {
+        "car": {
+          "count": 4,
+          "mean_iou": 0.47646044547458544,
+          "median_iou": 0.4671728971962617
+        },
+        "motorcycle": {
+          "count": 1,
+          "mean_iou": 0.45161290322580644,
+          "median_iou": 0.45161290322580644
+        },
+        "person": {
+          "count": 1,
+          "mean_iou": 0.0009804264855212018,
+          "median_iou": 0.0009804264855212018
+        }
+      }
+    },
+    {
+      "frame": "003453",
+      "semantic_miou": 0.20569010750209285,
+      "agnostic_miou": 0.3987897524487487,
+      "n_instances": 9,
+      "per_class": {
+        "car": {
+          "count": 6,
+          "mean_iou": 0.5532694684060734,
+          "median_iou": 0.5952380952380952
+        },
+        "motorcycle": {
+          "count": 1,
+          "mean_iou": 0.002062328139321723,
+          "median_iou": 0.002062328139321723
+        },
+        "other-vehicle": {
+          "count": 1,
+          "mean_iou": 0.2535211267605634,
+          "median_iou": 0.2535211267605634
+        },
+        "person": {
+          "count": 1,
+          "mean_iou": 0.01390750670241287,
+          "median_iou": 0.01390750670241287
+        }
+      }
+    },
+    {
+      "frame": "003494",
+      "semantic_miou": 0.3066892492867108,
+      "agnostic_miou": 0.3066892492867108,
+      "n_instances": 8,
+      "per_class": {
+        "car": {
+          "count": 8,
+          "mean_iou": 0.3066892492867108,
+          "median_iou": 0.2328933738595688
+        }
+      }
+    },
+    {
+      "frame": "003535",
+      "semantic_miou": 0.12073075989242288,
+      "agnostic_miou": 0.12073075989242288,
+      "n_instances": 12,
+      "per_class": {
+        "car": {
+          "count": 12,
+          "mean_iou": 0.12073075989242288,
+          "median_iou": 0.04618211782013029
+        }
+      }
+    },
+    {
+      "frame": "003576",
+      "semantic_miou": 0.47588165148668005,
+      "agnostic_miou": 0.25740658353020807,
+      "n_instances": 14,
+      "per_class": {
+        "car": {
+          "count": 13,
+          "mean_iou": 0.22099407220412942,
+          "median_iou": 0.13432835820895522
+        },
+        "other-vehicle": {
+          "count": 1,
+          "mean_iou": 0.7307692307692307,
+          "median_iou": 0.7307692307692307
+        }
+      }
+    },
+    {
+      "frame": "003617",
+      "semantic_miou": 0.402072596672826,
+      "agnostic_miou": 0.26053628332260237,
+      "n_instances": 15,
+      "per_class": {
+        "car": {
+          "count": 13,
+          "mean_iou": 0.22515220498504646,
+          "median_iou": 0.06433661771085084
+        },
+        "motorcycle": {
+          "count": 1,
+          "mean_iou": 0.9722222222222222,
+          "median_iou": 0.9722222222222222
+        },
+        "other-vehicle": {
+          "count": 1,
+          "mean_iou": 0.008843362811209371,
+          "median_iou": 0.008843362811209371
+        }
+      }
+    },
+    {
+      "frame": "003658",
+      "semantic_miou": 0.24046890815261335,
+      "agnostic_miou": 0.16664766733284203,
+      "n_instances": 10,
+      "per_class": {
+        "car": {
+          "count": 7,
+          "mean_iou": 0.1174335067863278,
+          "median_iou": 0.022928058485473253
+        },
+        "bicycle": {
+          "count": 1,
+          "mean_iou": 0.003217099431280565,
+          "median_iou": 0.003217099431280565
+        },
+        "motorcycle": {
+          "count": 1,
+          "mean_iou": 0.0012250263928450492,
+          "median_iou": 0.0012250263928450492
+        },
+        "other-vehicle": {
+          "count": 1,
+          "mean_iou": 0.84,
+          "median_iou": 0.84
+        }
+      }
+    },
+    {
+      "frame": "003700",
+      "semantic_miou": 0.25499636265844344,
+      "agnostic_miou": 0.25499636265844344,
+      "n_instances": 7,
+      "per_class": {
+        "car": {
+          "count": 7,
+          "mean_iou": 0.25499636265844344,
+          "median_iou": 0.01669750734733863
+        }
+      }
+    },
+    {
+      "frame": "003741",
+      "semantic_miou": 0.12110311823445995,
+      "agnostic_miou": 0.2521136612205685,
+      "n_instances": 11,
+      "per_class": {
+        "car": {
+          "count": 8,
+          "mean_iou": 0.34160200256369533,
+          "median_iou": 0.43256567486586306
+        },
+        "bicycle": {
+          "count": 2,
+          "mean_iou": 0.01872690077700651,
+          "median_iou": 0.01872690077700651
+        },
+        "other-vehicle": {
+          "count": 1,
+          "mean_iou": 0.0029804513626779812,
+          "median_iou": 0.0029804513626779812
+        }
+      }
+    },
+    {
+      "frame": "003782",
+      "semantic_miou": 0.26905708924820715,
+      "agnostic_miou": 0.30209629610189365,
+      "n_instances": 7,
+      "per_class": {
+        "car": {
+          "count": 5,
+          "mean_iou": 0.3268757012421585,
+          "median_iou": 0.23076923076923078
+        },
+        "bicycle": {
+          "count": 1,
+          "mean_iou": 0.16009852216748768,
+          "median_iou": 0.16009852216748768
+        },
+        "other-vehicle": {
+          "count": 1,
+          "mean_iou": 0.32019704433497537,
+          "median_iou": 0.32019704433497537
+        }
+      }
+    },
+    {
+      "frame": "003823",
+      "semantic_miou": 0.14273841622589523,
+      "agnostic_miou": 0.158410743137788,
+      "n_instances": 12,
+      "per_class": {
+        "car": {
+          "count": 11,
+          "mean_iou": 0.16154520852016654,
+          "median_iou": 0.04370732688704749
+        },
+        "bicycle": {
+          "count": 1,
+          "mean_iou": 0.12393162393162394,
+          "median_iou": 0.12393162393162394
+        }
+      }
+    },
+    {
+      "frame": "003864",
+      "semantic_miou": 0.3750107614426469,
+      "agnostic_miou": 0.2909092861694939,
+      "n_instances": 23,
+      "per_class": {
+        "car": {
+          "count": 21,
+          "mean_iou": 0.27320371242777747,
+          "median_iou": 0.11594202898550725
+        },
+        "other-vehicle": {
+          "count": 2,
+          "mean_iou": 0.4768178104575163,
+          "median_iou": 0.4768178104575163
+        }
+      }
+    },
+    {
+      "frame": "003905",
+      "semantic_miou": 0.1810862542094459,
+      "agnostic_miou": 0.1810862542094459,
+      "n_instances": 11,
+      "per_class": {
+        "car": {
+          "count": 11,
+          "mean_iou": 0.1810862542094459,
+          "median_iou": 0.09195589593177991
+        }
+      }
+    },
+    {
+      "frame": "003946",
+      "semantic_miou": 0.34112616248053895,
+      "agnostic_miou": 0.34112616248053895,
+      "n_instances": 11,
+      "per_class": {
+        "car": {
+          "count": 11,
+          "mean_iou": 0.34112616248053895,
+          "median_iou": 0.25721961047683006
+        }
+      }
+    },
+    {
+      "frame": "003987",
+      "semantic_miou": 0.21505144622058353,
+      "agnostic_miou": 0.3721595942509018,
+      "n_instances": 23,
+      "per_class": {
+        "car": {
+          "count": 19,
+          "mean_iou": 0.4158007464815457,
+          "median_iou": 0.3945945945945946
+        },
+        "bicycle": {
+          "count": 1,
+          "mean_iou": 0.00010682505261133842,
+          "median_iou": 0.00010682505261133842
+        },
+        "motorcycle": {
+          "count": 1,
+          "mean_iou": 0.0027454625089467894,
+          "median_iou": 0.0027454625089467894
+        },
+        "truck": {
+          "count": 1,
+          "mean_iou": 0.2349624060150376,
+          "median_iou": 0.2349624060150376
+        },
+        "other-vehicle": {
+          "count": 1,
+          "mean_iou": 0.4216417910447761,
+          "median_iou": 0.4216417910447761
+        }
+      }
+    },
+    {
+      "frame": "004028",
+      "semantic_miou": 0.32868314999296117,
+      "agnostic_miou": 0.3327705045278429,
+      "n_instances": 28,
+      "per_class": {
+        "car": {
+          "count": 22,
+          "mean_iou": 0.3388639580755683,
+          "median_iou": 0.35095137420718814
+        },
+        "bicycle": {
+          "count": 2,
+          "mean_iou": 0.22933210723489986,
+          "median_iou": 0.22933210723489986
+        },
+        "motorcycle": {
+          "count": 1,
+          "mean_iou": 0.7757009345794392,
+          "median_iou": 0.7757009345794392
+        },
+        "truck": {
+          "count": 1,
+          "mean_iou": 0.14596949891067537,
+          "median_iou": 0.14596949891067537
+        },
+        "other-vehicle": {
+          "count": 1,
+          "mean_iou": 0.2691176470588235,
+          "median_iou": 0.2691176470588235
+        },
+        "person": {
+          "count": 1,
+          "mean_iou": 0.21311475409836064,
+          "median_iou": 0.21311475409836064
+        }
+      }
+    },
+    {
+      "frame": "004070",
+      "semantic_miou": 0.2525633415710175,
+      "agnostic_miou": 0.4009987347054811,
+      "n_instances": 21,
+      "per_class": {
+        "car": {
+          "count": 17,
+          "mean_iou": 0.4624120654640831,
+          "median_iou": 0.4885290148448043
+        },
+        "bicycle": {
+          "count": 2,
+          "mean_iou": 0.01212701510570118,
+          "median_iou": 0.01212701510570118
+        },
+        "motorcycle": {
+          "count": 1,
+          "mean_iou": 0.0,
+          "median_iou": 0.0
+        },
+        "truck": {
+          "count": 1,
+          "mean_iou": 0.5357142857142857,
+          "median_iou": 0.5357142857142857
+        }
+      }
+    }
+  ]
+}
