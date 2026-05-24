@@ -33,8 +33,9 @@ geometric prompt sampling---requiring no training data, human annotations, or RG
 imagery. Through six independently tested and empirically disconfirmed improvement
 hypotheses on SemanticKITTI (4,071 frames), we establish a tightening ceiling chain:
 DBSCAN oracle at 39.4\% mIoU, pipeline bound $\leq$35\%, and empirical result of
-31.6\%. Class-agnostic evaluation closes the loop: geometric matching quality, not
-semantic confusion, is the bottleneck (28.8\% vs.\ 30.2\%). Our core finding is a hard
+31.6\%. Class-agnostic evaluation closes the loop: removing semantic class labels
+changes mIoU by only 0.3 percentage points (29.9\% vs.\ 30.2\%), confirming
+that geometric matching quality, not semantic confusion, is the bottleneck. Our core finding is a hard
 ceiling of $\sim$30\% mIoU for zero-training pure-geometric LiDAR instance
 segmentation---demonstrating that semantic information is fundamentally irreplaceable
 and providing a quantified calibration point for the field.
@@ -86,7 +87,7 @@ following contributions:
     disconfirmed improvement directions.
 
     \item \textbf{Evidence for the necessity of semantics}: We demonstrate through
-    feature analysis (209K fragments, AUC~$<0.7$), class-agnostic evaluation (1.4 pp
+    feature analysis (209K fragments, AUC~$<0.7$), class-agnostic evaluation (0.3 pp
     gap), and oracle saturation (39.4\% upper bound) that geometric signals are
     fundamentally insufficient to replace semantic information.
 
@@ -98,9 +99,9 @@ following contributions:
 
 Critically, geometric features computed at both fragment-level (209,832 DBSCAN clusters,
 AUC~$<0.7$ for all 8 descriptors) and mask-level (14,950 SAM masks, best AUC~$=0.660$)
-fail to provide any usable thing/stuff separation. Class-agnostic evaluation reveals
+fail to provide any usable thing/stuff separation. Class-agnostic evaluation on 100 uniformly sampled frames reveals
 that replacing semantic label matching with pure geometric IoU matching yields
-28.8\% mIoU versus 30.2\%---a difference of only 1.4 percentage points. This confirms
+30.2\% mIoU versus 29.9\%---a negligible difference of 0.3 percentage points. This confirms
 that geometric matching quality, not semantic confusion, is the fundamental bottleneck.
 
 To our knowledge, this is the first work to \textbf{systematically quantify the hard
@@ -413,14 +414,15 @@ is a fundamental limit, not a parameter-tuning artifact.
 \subsection{Class-Agnostic Validation}
 
 To verify that semantic confusion is not the primary bottleneck, we performed a
-class-agnostic evaluation: matching predicted masks to GT instances based purely
-on geometric IoU, ignoring semantic class labels entirely. This yields 28.8\% mIoU,
-compared to 30.2\% with semantic matching---a difference of only 1.4 percentage
-points. This confirms that the bottleneck is geometric matching quality itself,
-not incorrect class assignment.
-% TODO(author): 30.2% class-aware in this comparison differs from 31.6% in main result.
-% Verify whether this is due to subset/sampling differences or metric calculation.
-% These numbers must be consistent or the discrepancy must be explained in the text.
+controlled class-agnostic evaluation on 100 uniformly sampled frames from sequence
+08. For every GT thing instance, we matched it to the predicted mask with the
+highest geometric IoU, ignoring semantic class labels entirely. On the same frames,
+we also computed the standard semantic mIoU for direct comparison. The class-agnostic
+mIoU is 30.2\%, compared to 29.9\% with semantic per-class averaging---a negligible
+difference of only 0.3 percentage points. The near-zero gap confirms that geometric
+matching quality, not incorrect class assignment or semantic confusion, is the
+fundamental bottleneck. Full per-class and per-size breakdowns are provided in
+Appendix~\ref{app:agnostic}.
 
 \subsection{Capability Ceiling Summary}
 
@@ -473,7 +475,7 @@ discrimination}. Three converging lines of evidence support this:
     problem is not insufficient feature engineering---the information simply is not
     present in the point distribution.
 
-    \item \textbf{Class-agnostic equivalence}: The 1.4 pp gap between semantic and
+    \item \textbf{Class-agnostic equivalence}: The 0.3 pp gap between semantic and
     class-agnostic evaluation shows that correct classification is not the issue;
     the masks themselves are geometrically imprecise.
 
