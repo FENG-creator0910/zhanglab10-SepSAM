@@ -434,6 +434,7 @@ material.
 The preceding analyses compose a coherent boundary map for zero-training
 pure-geometric LiDAR instance segmentation. Figure~\ref{fig:ceiling}(a) captures the tightening ceiling cascade from the
 multi-scale DBSCAN oracle at 39.4\% to the conservative hard bound at $\sim$30\%,
+Figure~\ref{fig:ceiling_chain} provides a simplified four-level summary,
 and Table~\ref{tab:ceiling} provides the corresponding numerical summary:
 
 \begin{enumerate}
@@ -472,6 +473,18 @@ prompt quality, marginal gain; D6 (multi-scale DBSCAN oracle)---reaches 39.4\% m
 but only $+3.1$ pp above single-scale, insufficient to breach the ceiling.
 Collectively, these six directions converge to the hard bound shown in (a).}
 \label{fig:ceiling}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.85\linewidth]{figures/ceiling_chain.pdf}
+\caption{\textbf{Quantified four-level capability ceiling of zero-training pure-geometric
+LiDAR instance segmentation.} The bars descend from the multi-scale DBSCAN oracle
+(39.4\%, the theoretical maximum of any clustering-based approach) through pipeline
+degradation ($\leq$35\%) and the empirical SepSAM full-sequence result (31.6\%) to the
+conservative hard bound ($\sim$30\%), which marks the convergence of all six
+disconfirmed improvement directions.}
+\label{fig:ceiling_chain}
 \end{figure}
 
 \begin{table}[t]
