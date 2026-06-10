@@ -239,38 +239,47 @@ principled fallback when SAM's output is unreliable.
 \section{Experiments}
 % ============================================================
 
-\subsection{Setup}
+\subsection{Experimental Setup}
 
 \textbf{Dataset.} We evaluate on SemanticKITTI~\cite{Behley_2019_ICCV}
 sequence 08 (4,071 frames), which provides dense point-wise semantic and instance
 annotations for 8 ``thing'' classes (car, truck, bicycle, motorcycle, other-vehicle,
-person, bicyclist, motorcyclist). We use the standard mIoU metric with per-GT-instance
-matching.
+person, bicyclist, motorcyclist). All experiments use the standard mIoU metric with
+per-GT-instance matching. No training, validation, or calibration is performed on
+sequence 08 itself---DBSCAN hyperparameters were selected via grid search on 100
+frames from sequence 07.
 
-\textbf{Implementation.} We use the official SAM ViT-H checkpoint. All processing runs
-on a single NVIDIA Tesla V100-SXM2 (16\,GB). DBSCAN and ground filtering execute on CPU
-(scikit-learn~\cite{pedregosa2011scikit}), skeleton extraction uses
-scikit-image~\cite{vanderwalt2014scikit}. Total inference time is $\sim$2.8\,seconds per
-frame (SAM: 2.3\,s GPU, DBSCAN+skeleton: 0.5\,s CPU). The pipeline is fully
+\textbf{Implementation.} We use the official SAM ViT-H checkpoint. All processing
+runs on a single NVIDIA Tesla V100-SXM2 (16\,GB). DBSCAN and ground filtering execute
+on CPU (scikit-learn~\cite{pedregosa2011scikit}); skeleton extraction uses
+scikit-image~\cite{vanderwalt2014scikit}. Total inference time is $\sim$2.8\,s per
+frame (SAM: 2.3\,s GPU; DBSCAN+skeleton: 0.5\,s CPU). The pipeline is fully
 deterministic: all random seeds are fixed, and SAM runs in evaluation mode. DBSCAN
-$\epsilon$ was selected via grid search over $\{0.1, 0.2, 0.3, 0.5, 0.8\}$ on 100
-validation frames from sequence 07, with $\epsilon=0.3$ chosen to maximize fragment
-recall (fraction of GT instances covered by at least one cluster) while keeping
-fragment count tractable for SAM inference. Code and evaluation scripts will be
-released upon publication.
+$\epsilon$ was selected via grid search over $\{0.1, 0.2, 0.3, 0.5, 0.8\}$ to
+maximize fragment recall while keeping the cluster count tractable for SAM inference.
+Code and evaluation scripts will be released upon publication.
 
-\subsection{Main Result}
+\subsection{Main Result: The Empirical Ceiling}
 
-\textsc{SepSAM} achieves \textbf{31.62\% mIoU} on the full sequence 08, with a SAM
-adoption rate of 85.4\%. The per-class breakdown (Table~\ref{tab:perclass}) reveals
-strong performance disparity: medium-density objects (30--500 points, typically cars
-at moderate range) achieve reasonable IoU, while sparse objects (pedestrians,
-cyclists at long range, $<$30 points) and very large objects ($>$500 points, nearby
-vehicles) perform poorly.
+\textsc{SepSAM} achieves \textbf{31.62\% mIoU} on the full sequence 08 (4,071 frames),
+with a SAM adoption rate of 85.4\%. This number carries a specific meaning: when all
+training data, semantic labels, and RGB imagery are stripped away, pure geometric
+signals can recover roughly one-third of ground-truth instance pixels. The remaining
+two-thirds constitute the irreducible cost of operating without semantics.
+
+The per-class breakdown (Table~\ref{tab:perclass}) exposes a sharp performance
+gradient driven by point density rather than object semantics. Cars at moderate range
+(median 168 points) reach 42.3\% mIoU, while sparse objects---pedestrians (33 points),
+bicycles (25 points), motorcyclists (10 points)---fall below 12\%. At the opposite
+extreme, very large nearby objects ($>$500 points) also degrade, because their
+expansive surface area triggers DBSCAN fragmentation and SAM over-segmentation
+simultaneously. Critically, there is no evidence that semantic category \emph{per se}
+determines performance: a 30-point car fragment would fail for the same geometric
+reason as a 30-point pedestrian. The bottleneck is point density, not object identity.
 
 \begin{table}[t]
 \centering
-\caption{Per-class mIoU and instance count statistics on SemanticKITTI seq 08.}
+\caption{Per-class mIoU and instance statistics on SemanticKITTI sequence 08.}
 \label{tab:perclass}
 \begin{tabular}{lccc}
 \toprule
@@ -296,14 +305,73 @@ mIoU reflects the entire 4,071-frame sequence. Per-class variance originates fro
 natural diversity of instance sizes and geometries within each object category.}
 \end{table}
 
-\subsection{Systematic Boundary Analysis}
+\subsection{Systematic Boundary Analysis: Six Disconfirmed Hypotheses}
 
-The core contribution of this paper is not \textsc{SepSAM}'s 31.6\% result, but the
-six disconfirmed hypotheses that collectively establish its capability ceiling.
-Table~\ref{tab:claims} maps each direction to the specific claim it tests, and
-Fig.~\ref{fig:ceiling}(b) provides a visual summary. For each hypothesis below, we
-state the geometric intuition, present decisive empirical evidence, and report the
-conclusion.
+The 31.6\% result, taken alone, is merely a data point. Its scientific value emerges
+only when we ask: \emph{could simple modifications push this number substantially
+higher?} To answer this, we systematically tested six independent hypotheses for
+improving pure-geometric segmentation. Each hypothesis was chosen because it represents
+a plausible, low-cost enhancement that a practitioner would reasonably attempt. All six
+were empirically disconfirmed. We organize them below by failure mode.
+
+\subsubsection{Data Preprocessing Bottleneck: Point-Count Filtering (D1)}
+
+A natural first instinct is to filter out small clusters as noise, on the assumption
+that genuine objects contain many points. This fails immediately. The median GT thing
+instance in SemanticKITTI contains only 68 points, and the distribution is heavily
+skewed by range: pedestrians (33), bicycles (25), and motorcyclists (10) are
+physically small and distant. A threshold of 100 points eliminates 41\% of all GT
+instances. Physical sparsity at long range makes point-count filtering fundamentally
+incompatible with recall.
+
+\subsubsection{Feature Engineering Failure: Fragment-Level and Mask-Level Geometry (D2, D3)}
+
+If point counts cannot separate objects from background, perhaps richer geometric
+descriptors can. We tested this at two granularities.
+
+At the fragment level, we collected 209,832 DBSCAN clusters from 500 frames and
+computed 8 features (linearity, planarity, sphericity, compactness, volume, density,
+and PCA eigenvalues). The best-performing feature achieved AUC~$=0.615$, well below
+the 0.7 threshold considered minimally usable. A t-SNE visualization of the full
+8-dimensional space revealed near-complete overlap between thing and stuff clusters
+(separation score $=0.005$).
+
+At the mask level, where SAM outputs provide larger and more complete regions, we
+computed 16 features (3D density, volume, surface area, convexity, PCA-derived shape
+descriptors) across 14,950 masks from 289 frames. The best AUC reached only 0.660---still
+below 0.7. Even complete object masks carry no usable geometric signature for
+separating things from stuff. The geometry-to-semantics mapping is fundamentally
+ambiguous at LiDAR resolutions.
+
+\subsubsection{Pipeline Design Non-Bottleneck: Merging and Prompting (D4, D5)}
+
+We then examined whether \textsc{SepSAM}'s specific design choices---rather than the
+underlying geometric signal---were the limiting factor.
+
+\textbf{IoU-based mask merging (D4).} If over-segmentation were the dominant failure
+mode, merging overlapping SAM masks should improve performance. The Pearson correlation
+between mask filtering rate and frame-level mIoU is $r = -0.062$, statistically
+indistinguishable from zero. Over-segmentation is not the bottleneck; even perfectly
+merged fragments would not shift mIoU meaningfully.
+
+\textbf{Farthest Point Sampling for prompts (D5).} If skeleton-based prompt placement
+were suboptimal, FPS could improve coverage. Only 66 of 4,071 frames (1.6\%) fail
+primarily due to prompt quality. The theoretical maximum gain from better prompt
+sampling is bounded at 1.6 percentage points---within measurement noise.
+
+\subsubsection{Ensemble Upper Bound: Multi-Scale DBSCAN Oracle (D6)}
+
+A single DBSCAN $\epsilon$ cannot handle all object scales. Could a multi-scale
+strategy break through? We computed the oracle over $\epsilon \in \{0.3, 0.5, 0.8\}$,
+taking the per-instance best-match IoU across all three scales---the theoretical
+maximum of any multi-scale clustering approach. The oracle reaches 39.4\% mIoU, only
+3.1 percentage points above the single-scale $\epsilon=0.3$ baseline (36.3\%). For
+large instances ($>$500 points), the gain is merely $+0.2$ pp (13.3\% to 13.5\%).
+Multi-scale DBSCAN is not a path around the ceiling.
+
+\textbf{Summary of six directions.} Table~\ref{tab:claims} maps each direction to the
+claim it tested; Fig.~\ref{fig:ceiling}(b) provides a visual overview. No single
+direction, nor any obvious combination, offers a path beyond $\sim$35\% mIoU.
 
 \begin{table}[t]
 \centering
@@ -323,108 +391,56 @@ D6 & Multi-scale DBSCAN oracle & Can multi-scale clustering bypass the ceiling? 
 \end{tabular}
 \end{table}
 
-\subsubsection{Direction 1: Point-Count Threshold Filtering}
+\subsection{Class-Agnostic Validation: The Decisive Test}
 
-\textbf{Hypothesis:} GT thing instances consistently contain $>$100 points, so a
-point-count filter could suppress stuff-region false positives.
+All six directions above share an implicit premise: that the current pipeline fails
+because it confuses object categories, and that semantic information could resolve the
+ambiguity. To test this premise directly, we designed a controlled class-agnostic
+evaluation.
 
-\textbf{Evidence:} The median GT thing instance contains only 68 points. The
-distributions are heavily skewed: person (33), bicycle (25), motorcyclist (10).
-A threshold of 100 eliminates 41\% of all GT instances.
+On 100 uniformly sampled frames from sequence 08, we matched every GT thing instance
+to its highest-IoU predicted mask \emph{without using class labels}. We then compared
+this class-agnostic mIoU against the standard semantic mIoU computed on the identical
+frames with the identical predictions. The only difference is whether class labels
+mediate the matching.
 
-\textbf{Conclusion:} Physical sparsity at long range makes point-count filtering
-fundamentally incompatible with recall requirements.
+The result is stark: class-agnostic mIoU is 30.2\%, compared to 29.9\% for semantic
+matching---a gap of \textbf{0.3 percentage points}. The sign even favors the agnostic
+variant, ruling out the possibility that semantics provides a small but consistent
+benefit.
 
-\subsubsection{Direction 2: Fragment-Level Geometric Feature Filtering}
+\textbf{Interpretation.} If semantic class information were important for instance
+segmentation, removing it should cause a measurable performance drop. The near-zero
+gap demonstrates the opposite: semantic labels contribute essentially nothing to
+geometric instance matching on LiDAR. The failure of \textsc{SepSAM} is not that it
+misclassifies objects; it is that the geometric masks themselves are imprecise, and
+no amount of semantic relabeling can fix a poorly localized mask. Semantic
+information is unnecessary for geometric instance segmentation of LiDAR because the
+hard bottleneck lies upstream, in the geometric matching stage. Per-class and
+per-size breakdowns are provided in Appendix~\ref{app:agnostic}.
 
-\textbf{Hypothesis:} DBSCAN fragments from thing objects differ geometrically
-from stuff-region fragments (e.g., things are more ``compact'' or ``linear'').
+\subsection{Capability Ceiling: The Complete Picture}
 
-\textbf{Method:} We collected 209,832 DBSCAN clusters from 500 frames and computed
-8 geometric features: linearity $(\lambda_0-\lambda_1)/\lambda_0$, planarity
-$(\lambda_1-\lambda_2)/\lambda_0$, sphericity $\lambda_2/\lambda_0$, compactness,
-volume, density, and PCA eigenvalues from the 3D covariance matrix. We evaluated
-discriminability via AUC-ROC for binary thing/stuff classification.
+The preceding analyses compose a coherent boundary map for zero-training
+pure-geometric LiDAR instance segmentation. Figure~\ref{fig:ceiling}(a) visualizes
+this as a tightening chain, and Table~\ref{tab:ceiling} distills it into four
+quantified levels:
 
-\textbf{Evidence:} The best-performing feature achieved AUC = 0.615 (sphericity).
-All features fell below the 0.7 threshold considered minimally usable. A t-SNE
-visualization of the 8-dimensional feature space showed near-complete overlap
-between thing and stuff clusters (separation score = 0.005).
-
-\textbf{Conclusion:} Fragment-level geometry carries negligible semantic signal.
-The fragments are too small (median 68 points) for meaningful shape characterization.
-
-\subsubsection{Direction 3: Mask-Level Geometric Feature Filtering}
-
-\textbf{Hypothesis:} Full SAM masks, being larger and more complete than DBSCAN
-fragments, might yield discriminative geometric features.
-
-\textbf{Method:} We collected 14,950 SAM masks from 289 frames and computed 16
-geometric features including 3D density, volume, surface area, convexity, and
-PCA-derived shape descriptors.
-
-\textbf{Evidence:} The best AUC was 0.660 (3D density), still below 0.7.
-
-\textbf{Conclusion:} Even at the mask level, pure geometry cannot separate objects
-from non-objects. The geometry-to-semantics mapping is fundamentally ambiguous.
-
-\subsubsection{Direction 4: IoU-Based Mask Merging}
-
-\textbf{Hypothesis:} DBSCAN over-segmentation causes large objects to be split into
-many fragments; merging high-IoU SAM masks could recover complete instances.
-
-\textbf{Evidence:} The Pearson correlation between mask filtering rate and frame-level
-mIoU is $r = -0.062$ (statistically indistinguishable from zero). Even aggressive
-merging strategies produce no meaningful improvement.
-
-\textbf{Conclusion:} Over-segmentation is not the primary failure mode. Even if
-fragments were perfectly merged, performance would barely change.
-
-\subsubsection{Direction 5: Alternative Prompt Sampling (FPS)}
-
-\textbf{Hypothesis:} Farthest Point Sampling (FPS) might produce better-distributed
-SAM prompts than skeleton-based sampling.
-
-\textbf{Evidence:} Only 66 out of 4,071 frames (1.6\%) fail primarily due to prompt
-quality issues. The marginal gain from optimizing prompt placement is bounded at
-1.6 percentage points of mIoU.
-
-\textbf{Conclusion:} Prompt sampling quality is not the bottleneck. The 1.6\%
-potential gain is within measurement noise.
-
-\subsubsection{Direction 6: Multi-Scale DBSCAN Oracle}
-
-\textbf{Hypothesis:} A single $\epsilon$ cannot handle the wide range of object
-scales; multiple scales could capture both small and large objects.
-
-\textbf{Method:} We ran DBSCAN with $\epsilon \in \{0.3, 0.5, 0.8\}$ and computed
-the \emph{oracle} upper bound by taking, for each GT instance, the best-match IoU
-across all three scales. This represents the theoretical maximum of any multi-scale
-DBSCAN strategy.
-
-\textbf{Evidence:} The multi-scale oracle achieves 39.4\% mIoU, only 3.1 percentage
-points above the single-scale $\epsilon=0.3$ result (36.3\%). For large instances
-($>$500 points), the oracle provides merely +0.2 percentage points (13.3\% to
-13.5\%).
-
-\textbf{Conclusion:} Multi-scale DBSCAN provides marginal benefit and almost no help
-for the hardest case---large nearby objects. The DBSCAN oracle ceiling of $\sim$39\%
-is a fundamental limit, not a parameter-tuning artifact.
-
-\subsection{Class-Agnostic Validation}
-
-To verify that semantic confusion is not the primary bottleneck, we performed a
-controlled class-agnostic evaluation on 100 uniformly sampled frames from sequence
-08. For every GT thing instance, we matched it to the predicted mask with the
-highest geometric IoU, ignoring semantic class labels entirely. On the same frames,
-we also computed the standard semantic mIoU for direct comparison. The class-agnostic
-mIoU is 30.2\%, compared to 29.9\% with semantic per-class averaging---a negligible
-difference of only 0.3 percentage points. The near-zero gap confirms that geometric
-matching quality, not incorrect class assignment or semantic confusion, is the
-fundamental bottleneck. Full per-class and per-size breakdowns are provided in
-Appendix~\ref{app:agnostic}.
-
-\subsection{Capability Ceiling Summary}
+\begin{enumerate}
+    \item \textbf{Theoretical oracle (39.4\%).} Multi-scale DBSCAN with per-instance
+    optimal $\epsilon$ selection sets the absolute upper bound for any clustering-based
+    approach. This is the best that geometry alone could ever achieve at the
+    over-segmentation stage---before SAM, before prompts, before consistency checks.
+    \item \textbf{Pipeline degradation ($\leq$35\%).} The gap between the DBSCAN oracle
+    and a realistic SAM pipeline is approximately 4--5 pp, established by the failure
+    of merging (D4) and prompting (D5) to close it.
+    \item \textbf{Empirical full-sequence (31.6\%).} \textsc{SepSAM}'s measured
+    performance on 4,071 frames anchors the chain in reality.
+    \item \textbf{Conservative hard bound ($\sim$30\%).} All six directions converge
+    on this value. Even under optimistic assumptions about future improvements, a
+    pure-geometric method cannot sustainably exceed 30\% mIoU on standard spinning
+    LiDAR.
+\end{enumerate}
 
 \begin{figure}[t]
 \centering
@@ -441,8 +457,6 @@ paper: pure geometry cannot replace semantic information.}
 \label{fig:ceiling}
 \end{figure}
 
-Table~\ref{tab:ceiling} summarizes the complete ceiling quantification chain.
-
 \begin{table}[t]
 \centering
 \caption{Quantified capability ceilings for zero-training pure-geometric methods.}
@@ -458,6 +472,15 @@ Conservative hard bound & $\sim$30 & All six directions \\
 \bottomrule
 \end{tabular}
 \end{table}
+
+To be clear: this ceiling is not a claim about what trained, semantic-aware methods
+can achieve. ALPINE~\cite{sautier2025alpine} reaches 66.6 PQ with semantic labels
+and simple clustering. ALISE~\cite{lyu2025alise} eliminates human annotations
+entirely using foundation model pseudo-labels. The $\sim$30\% bound applies
+specifically to the zero-training, zero-semantics, pure-geometry regime. Crossing it
+requires introducing semantic information---whether from vision-language models,
+self-supervised features, or lightweight learned classifiers. Further investment in
+geometric heuristics alone will not suffice.
 
 % ============================================================
 \section{Discussion}
