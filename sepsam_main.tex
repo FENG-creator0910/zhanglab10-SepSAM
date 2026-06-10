@@ -57,23 +57,18 @@ capability remains in the geometric signal alone? Despite its practical
 importance---it defines the lower bound below which semantic information is
 irreplaceable---this question has never been systematically answered.
 
-Recent work has approached the zero-shot, training-free, or
-annotation-efficient setting from several directions. Clustering-based methods
-such as ALPINE~\cite{sautier2025alpine} demonstrate that simple algorithms
-can rival trained models when semantic labels are available, while
-ALISE~\cite{lyu2025alise} replaces human annotations with foundation-model
-pseudo-labels. Orthogonally, several efforts adapt the Segment Anything Model
-(SAM)~\cite{Kirillov_2023_ICCV} to 3D point clouds through
+Recent work has approached the zero-shot or training-free setting from several
+directions. ALPINE~\cite{sautier2025alpine} shows that simple clustering rivals
+trained models when semantic labels are available; ALISE~\cite{lyu2025alise}
+replaces human annotations with foundation-model pseudo-labels. Orthogonally,
+several efforts adapt SAM~\cite{Kirillov_2023_ICCV} to 3D point clouds through
 projection~\cite{guo2024sam2point,cen2023segment} or
-distillation~\cite{zhou2024pointsam}. Each of these works reports performance
-on standard benchmarks, but they collectively leave open a critical
-meta-question: \textbf{is there a fundamental performance ceiling inherent to
-the geometric modality itself, or can better engineering---improved projection,
-smarter clustering, richer features---push performance arbitrarily high?} The
-unstated assumption pervading this literature is that the latter holds, and
-that further refinement of geometric heuristics will yield continued gains. To
-our knowledge, this assumption has never been empirically tested, let alone
-falsified.
+distillation~\cite{zhou2024pointsam}. Each reports performance on standard
+benchmarks, but a critical meta-question remains open: \textbf{is there a
+fundamental performance ceiling inherent to the geometric modality, or can better
+engineering push performance arbitrarily high?} The implicit assumption is that
+further refinement of geometric heuristics will yield continued gains. This
+assumption has never been empirically tested, let alone falsified.
 
 Our work departs fundamentally from this tradition. We do not propose a new
 method, nor do we claim to advance the state of the art in LiDAR instance
@@ -98,37 +93,29 @@ This paper makes three contributions:
 
 \begin{enumerate}
     \item \textbf{A quantified hard ceiling for pure-geometric LiDAR instance
-    segmentation.} We establish the first empirically grounded performance
-    bound of $\sim$30\% mIoU for zero-training, zero-semantics methods on
-    standard spinning LiDAR, supported by a tightening quantification chain
-    from the multi-scale DBSCAN oracle (39.4\%) to the conservative hard bound
-    (Table~\ref{tab:ceiling}).
+    segmentation.} We establish the first empirically grounded bound of
+    $\sim$30\% mIoU for zero-training, zero-semantics methods, supported by a
+    tightening quantification chain from the DBSCAN oracle (39.4\%) to the
+    conservative hard bound (Table~\ref{tab:ceiling}).
 
-    \item \textbf{Systematic falsification of six intuitively plausible
-    improvement directions.} Through controlled experiments on 4,071 frames of
-    SemanticKITTI~\cite{Behley_2019_ICCV}, we rule out point-count filtering,
-    fragment- and mask-level geometric feature engineering, IoU-based mask
-    merging, improved prompt sampling, and multi-scale DBSCAN ensembles as
-    viable paths beyond the ceiling. These negative results are as informative
-    as positive ones: they prevent future work from pursuing directions that
-    geometry alone cannot solve.
+    \item \textbf{Systematic falsification of six improvement hypotheses.} On
+    4,071 frames of SemanticKITTI~\cite{Behley_2019_ICCV}, we rule out
+    point-count filtering, geometric feature engineering (fragment- and
+    mask-level), IoU-based merging, improved prompt sampling, and multi-scale
+    DBSCAN ensembles as viable paths beyond the ceiling.
 
-    \item \textbf{Evidence that geometric matching, not semantic confusion, is
-    the bottleneck.} Through a class-agnostic evaluation (100 frames), we show
-    that removing semantic class labels changes mIoU by only 0.3 percentage
-    points (29.9\% vs.\ 30.2\%). This demonstrates that semantic information
-    is unnecessary for geometric instance segmentation of LiDAR---the hard
-    bottleneck lies upstream, in the quality of the geometric masks
-    themselves.
+    \item \textbf{Evidence that geometric matching, not semantics, is the
+    bottleneck.} A class-agnostic evaluation (100 frames) shows that removing
+    semantic labels changes mIoU by only 0.3 pp (29.9\% vs.\ 30.2\%),
+    demonstrating that the hard bottleneck lies in geometric mask quality, not
+    semantic confusion.
 \end{enumerate}
 
-To our knowledge, this is the first work to systematically quantify and
-empirically validate a hard performance ceiling for pure-geometric LiDAR
-instance segmentation. Our findings carry a clear message for the field:
-further investment in geometric heuristics alone will not suffice. The path
-toward practical training-free perception requires introducing a semantic
-signal---whether from vision-language models, self-supervised features, or
-lightweight learned classifiers.
+To our knowledge, this is the first systematic quantification of a hard
+performance ceiling for pure-geometric LiDAR instance segmentation. Our findings
+show that further investment in geometric heuristics alone will not suffice; the
+path forward requires introducing a semantic signal---from vision-language models,
+self-supervised features, or lightweight learned classifiers.
 
 % ============================================================
 \section{Related Work}
@@ -136,59 +123,39 @@ lightweight learned classifiers.
 
 \subsection{SAM and Its 3D Extensions}
 
-SAM~\cite{Kirillov_2023_ICCV} demonstrated remarkable zero-shot 2D
-segmentation capability via promptable design, sparking a wave of 3D adaptation
-efforts. These adaptations fall into two broad strategies. \textbf{Projection-based}
-methods render 3D data into 2D views for SAM to process: SAM2Point~\cite{guo2024sam2point}
-treats 3D scenes as videos, and SA3D~\cite{cen2023segment} uses iterative mask
-projection for radiance field scenes---both requiring rendered RGB imagery.
-\textbf{Distillation-based} methods, such as Point-SAM~\cite{zhou2024pointsam},
-train a 3D-native backbone to mimic SAM's 2D outputs, trading zero-shot generality
-for 3D efficiency. Across both strategies, a common dependency persists: either RGB
-cameras co-located with the 3D sensor, training data for distillation, or both. Our
-work investigates the extreme end of this design space---harnessing SAM for
-\emph{pure} LiDAR point clouds without any visual modality, training data, or learned
-prompting strategy.
+SAM~\cite{Kirillov_2023_ICCV} sparked a wave of 3D adaptation efforts via two
+strategies. Projection-based methods render 3D data into 2D for SAM to
+process~\cite{guo2024sam2point,cen2023segment}; distillation-based methods train
+3D backbones to mimic SAM outputs~\cite{zhou2024pointsam}. Both require RGB
+cameras or training data. Our work investigates the extreme opposite: harnessing
+SAM for pure LiDAR point clouds without any visual modality, training, or learned
+prompting.
 
 \subsection{Training-Free LiDAR Segmentation}
 
-A recent and striking development is the resurgence of clustering-based methods
-that rival trained approaches, forming a spectrum of dependency reduction.
-At one end, ALPINE~\cite{sautier2025alpine} demonstrates that a k-NN graph
-connected-components algorithm, given only per-point semantic labels from an
-off-the-shelf network, achieves state-of-the-art panoptic segmentation on
-SemanticKITTI (PQ 66.6, \#1 leaderboard) without instance-level training.
-Moving further, ALISE~\cite{lyu2025alise} eliminates \emph{human} annotations
-entirely by using vision foundation models to generate pseudo-labels for
-self-training a 3D network. Orthogonally, ICP-4D~\cite{oh2025trainingfree}
-extends the training-free paradigm to the temporal domain via iterative closest
-point matching across 4D LiDAR sequences.
-
-Our work occupies the extreme endpoint of this dependency-reduction spectrum.
-\textsc{SepSAM} removes the last remaining dependency---semantic labels---and asks:
-what remains possible with pure geometry alone? The answer ($\sim$30\% mIoU) provides
-a quantitative lower reference that contextualizes the achievements of ALPINE and
-ALISE: semantic information, not the instance grouping mechanism, accounts for the
-performance gap between 30\% and 66\% PQ.
+A recent development is the resurgence of clustering-based methods that rival
+trained approaches. ALPINE~\cite{sautier2025alpine} achieves state-of-the-art
+panoptic segmentation (PQ 66.6, SemanticKITTI) using only per-point semantic
+labels and a k-NN graph, without instance-level training.
+ALISE~\cite{lyu2025alise} eliminates human annotations via foundation-model
+pseudo-labels for self-training. ICP-4D~\cite{oh2025trainingfree} extends the
+training-free paradigm to 4D LiDAR sequences via iterative closest point matching.
+Our work occupies the extreme endpoint of this spectrum: removing semantic labels
+entirely. The $\sim$30\% mIoU result provides a quantitative lower reference
+showing that semantics, not the grouping mechanism, accounts for the gap between
+30\% and 66\% PQ.
 
 \subsection{Zero-Shot and Foundation-Model-Driven Perception}
 
-Beyond clustering-based approaches, the broader perception landscape is shifting
-toward foundation-model-driven methods with zero-shot generalization. Vision-language
-models such as CLIP~\cite{radford2021learning} enable open-vocabulary 3D scene
-understanding in autonomous driving without per-category training~\cite{cheng2024open3dworld}.
-At the extreme, zPROD~\cite{sinhamahapatra2025zprod} demonstrates that frozen large
-vision-language models can perform zero-shot out-of-distribution object detection,
-outperforming fully supervised baselines on standard anomaly benchmarks. These
-developments signal that foundation models are fundamentally reshaping the
-capability envelope of perception systems.
-
-Our boundary analysis engages with this trend from the opposite direction: rather than
-pushing the upper bound through stronger foundation models, we establish the lower
-bound through complete removal of learned components. The gap between
-\textsc{SepSAM}'s $\sim$30\% mIoU and the performance of CLIP- or VLM-driven methods
-quantifies the irreducible value of semantic knowledge, providing a calibration
-baseline for the entire spectrum of training-free perception methods.
+Foundation-model-driven methods with zero-shot generalization are reshaping the
+perception landscape. CLIP~\cite{radford2021learning} enables open-vocabulary 3D
+understanding without per-category training~\cite{cheng2024open3dworld};
+zPROD~\cite{sinhamahapatra2025zprod} demonstrates zero-shot OOD detection
+outperforming supervised baselines. Our boundary analysis engages from the
+opposite direction: establishing the lower bound through complete removal of
+learned components. The gap between $\sim$30\% mIoU and the performance of
+VLM-driven methods quantifies the irreducible value of semantic knowledge,
+providing a calibration baseline for the training-free perception spectrum.
 
 % ============================================================
 \section{Method: \textsc{SepSAM}}
@@ -243,17 +210,11 @@ Output: Instance labels L = {l_i}
 
 \subsection{Design Rationale}
 
-The over-segmentation strategy is deliberate. Rather than attempting to tune DBSCAN
-parameters to directly produce complete instances (which we show is impossible for
-a single $\epsilon$), we accept fragmentation and rely on SAM's ability to ``grow''
-masks from interior prompt points. The skeleton sampling strategy places prompts
-at the medial axis of each fragment, maximizing the likelihood that SAM's
-prompt-to-mask expansion captures the full object extent.
-
-This design separates \textsc{SepSAM} from prior methods in three ways: (1) no
-RGB image is required at any stage; (2) prompts are generated geometrically without
-a learned prompt-prediction network; (3) the consistency check provides a
-principled fallback when SAM's output is unreliable.
+Rather than tuning DBSCAN to produce complete instances directly (impossible for a
+single $\epsilon$), we deliberately over-segment and rely on SAM to grow masks from
+skeleton-derived interior prompt points. This separates \textsc{SepSAM} from prior
+methods: (1) no RGB input; (2) purely geometric prompt generation without learned
+networks; (3) a consistency-check fallback for unreliable SAM outputs.
 
 % ============================================================
 \section{Experiments}
@@ -269,15 +230,14 @@ per-GT-instance matching. No training, validation, or calibration is performed o
 sequence 08 itself---DBSCAN hyperparameters were selected via grid search on 100
 frames from sequence 07.
 
-\textbf{Implementation.} We use the official SAM ViT-H checkpoint. All processing
-runs on a single NVIDIA Tesla V100-SXM2 (16\,GB). DBSCAN and ground filtering execute
-on CPU (scikit-learn~\cite{pedregosa2011scikit}); skeleton extraction uses
+\textbf{Implementation.} We use the official SAM ViT-H checkpoint on a single NVIDIA
+Tesla V100-SXM2 (16\,GB). DBSCAN and ground filtering run on CPU
+(scikit-learn~\cite{pedregosa2011scikit}); skeleton extraction uses
 scikit-image~\cite{vanderwalt2014scikit}. Total inference time is $\sim$2.8\,s per
 frame (SAM: 2.3\,s GPU; DBSCAN+skeleton: 0.5\,s CPU). The pipeline is fully
-deterministic: all random seeds are fixed, and SAM runs in evaluation mode. DBSCAN
-$\epsilon$ was selected via grid search over $\{0.1, 0.2, 0.3, 0.5, 0.8\}$ to
-maximize fragment recall while keeping the cluster count tractable for SAM inference.
-Code and evaluation scripts will be released upon publication.
+deterministic. DBSCAN $\epsilon$ was selected via grid search over
+$\{0.1, 0.2, 0.3, 0.5, 0.8\}$ on 100 frames from sequence 07. Code will be
+released upon publication.
 
 \subsection{Main Result: What Pure Geometry Can Achieve}
 
@@ -322,11 +282,9 @@ Motorcycl. &  10 &  3.2 &  1.1 \\
 \bottomrule
 \end{tabular}
 
-\vspace{4pt}
-{\footnotesize \textbf{Note:} The pipeline is fully deterministic (fixed SAM checkpoint,
-fixed DBSCAN parameters); per-class standard deviation across runs is zero. Reported
-mIoU reflects the entire 4,071-frame sequence. Per-class variance originates from the
-natural diversity of instance sizes and geometries within each object category.}
+\vspace{2pt}
+{\footnotesize \textbf{Note:} Pipeline is fully deterministic; mIoU reported over all
+4,071 frames. Per-class variance reflects natural instance diversity.}
 \end{table}
 
 \subsection{Systematic Boundary Analysis: Six Disconfirmed Hypotheses}
@@ -439,51 +397,37 @@ and Table~\ref{tab:ceiling} provides the corresponding numerical summary:
 
 \begin{enumerate}
     \item \textbf{Theoretical oracle (39.4\%).} Multi-scale DBSCAN with per-instance
-    optimal $\epsilon$ selection sets the absolute upper bound for any clustering-based
-    approach---before SAM, before prompts, before consistency checks.
-    \item \textbf{Pipeline degradation ($\leq$35\%).} The gap between the DBSCAN oracle
-    and a realistic SAM pipeline is approximately 4--5 pp, established by the failure
-    of merging (D4) and prompting (D5) to close it.
+    optimal $\epsilon$---the absolute upper bound for any clustering-based approach.
+    \item \textbf{Pipeline degradation ($\leq$35\%).} The 4--5 pp gap between oracle
+    and SAM pipeline, established by failure of merging (D4) and prompting (D5).
     \item \textbf{Empirical full-sequence (31.6\%).} \textsc{SepSAM}'s measured
-    performance on 4,071 frames anchors the chain in measured reality.
-    \item \textbf{Conservative hard bound ($\sim$30\%).} All six disconfirmed directions
-    converge on this value. Even under optimistic assumptions about future refinements
-    to geometric heuristics, a pure-geometric method cannot sustainably exceed 30\%
-    mIoU on standard spinning LiDAR.
+    performance on 4,071 frames.
+    \item \textbf{Conservative hard bound ($\sim$30\%).} Convergence of all six
+    disconfirmed directions; pure-geometric methods cannot sustainably exceed this.
 \end{enumerate}
 
 \begin{figure}[t]
 \centering
 \includegraphics[width=\linewidth]{figures/fig1_ceiling.pdf}
 \caption{\textbf{Quantitative upper bound analysis of pure-geometric LiDAR instance
-segmentation.} (a) Ceiling cascade: from top to bottom, the multi-scale DBSCAN oracle
-(39.4\% mIoU) defines the theoretical maximum of any clustering-based
-over-segmentation; pipeline degradation ($\leq$35\%) captures the loss introduced by
-SAM projection, prompting, and consistency checking; the empirical full-sequence result
-(31.6\%) anchors the chain in measured performance on 4,071 frames of
-SemanticKITTI~\cite{Behley_2019_ICCV} sequence~08; and the conservative hard bound
-($\sim$30\%) marks the convergence of all six falsification directions.
-(b) Six disconfirmed improvement hypotheses: D1 (point-count filtering)---a threshold
-of 100 points eliminates 41\% of GT instances, infeasible; D2 (fragment-level
-geometric features)---8 descriptors over 209,832 DBSCAN clusters, best AUC~$=0.615$;
-D3 (mask-level geometric features)---16 descriptors over 14,950 SAM masks, best
-AUC~$=0.660$; D4 (IoU-based mask merging)---Pearson $r=-0.062$, over-segmentation is
-not the bottleneck; D5 (FPS prompt sampling)---only 1.6\% of frames fail due to
-prompt quality, marginal gain; D6 (multi-scale DBSCAN oracle)---reaches 39.4\% mIoU
-but only $+3.1$ pp above single-scale, insufficient to breach the ceiling.
-Collectively, these six directions converge to the hard bound shown in (a).}
+segmentation.} (a) Ceiling cascade: multi-scale DBSCAN oracle (39.4\% mIoU),
+pipeline degradation ($\leq$35\%), empirical full-sequence result (31.6\% on 4,071
+frames of SemanticKITTI~\cite{Behley_2019_ICCV} sequence~08), and conservative hard
+bound ($\sim$30\%). (b) Six disconfirmed hypotheses: D1---100-point threshold kills
+41\% of GT instances; D2---8 fragment-level features, AUC~$=0.615$; D3---16
+mask-level features, AUC~$=0.660$; D4---IoU merging, $r=-0.062$; D5---FPS sampling,
+1.6\% frame failure rate; D6---multi-scale oracle reaches 39.4\% ($+3.1$ pp).
+All six directions converge to the hard bound in (a).}
 \label{fig:ceiling}
 \end{figure}
 
 \begin{figure}[t]
 \centering
 \includegraphics[width=0.85\linewidth]{figures/ceiling_chain.pdf}
-\caption{\textbf{Quantified four-level capability ceiling of zero-training pure-geometric
-LiDAR instance segmentation.} The bars descend from the multi-scale DBSCAN oracle
-(39.4\%, the theoretical maximum of any clustering-based approach) through pipeline
-degradation ($\leq$35\%) and the empirical SepSAM full-sequence result (31.6\%) to the
-conservative hard bound ($\sim$30\%), which marks the convergence of all six
-disconfirmed improvement directions.}
+\caption{\textbf{Quantified four-level capability ceiling of pure-geometric LiDAR
+instance segmentation.} Bars show the tightening chain from multi-scale DBSCAN oracle
+(39.4\%) through pipeline degradation ($\leq$35\%) and empirical SepSAM result
+(31.6\%) to the conservative hard bound ($\sim$30\%).}
 \label{fig:ceiling_chain}
 \end{figure}
 
@@ -503,14 +447,11 @@ Conservative hard bound & $\sim$30 & All six directions \\
 \end{tabular}
 \end{table}
 
-To be clear: this ceiling is not a claim about what trained, semantic-aware methods
-can achieve. ALPINE~\cite{sautier2025alpine} reaches 66.6 PQ with semantic labels
-and simple clustering. ALISE~\cite{lyu2025alise} eliminates human annotations
-entirely using foundation model pseudo-labels. The $\sim$30\% bound applies
-specifically to the zero-training, zero-semantics, pure-geometry regime. Crossing it
-requires introducing semantic information---whether from vision-language models,
-self-supervised features, or lightweight learned classifiers. Further investment in
-geometric heuristics alone will not suffice.
+This ceiling is specific to the zero-training, zero-semantics, pure-geometry regime.
+ALPINE~\cite{sautier2025alpine} (66.6 PQ) and ALISE~\cite{lyu2025alise} demonstrate
+that adding semantic information---even without instance-level training---crosses it.
+Further investment in geometric heuristics alone will not suffice; crossing the
+$\sim$30\% bound requires introducing a semantic signal.
 
 % ============================================================
 \section{Discussion}
@@ -518,149 +459,98 @@ geometric heuristics alone will not suffice.
 
 \subsection{Why Pure Geometry Hits a Ceiling}
 
-Three converging lines of evidence support the conclusion that the geometric signal
-in LiDAR point clouds is fundamentally insufficient for semantic instance
-discrimination:
-
-\begin{enumerate}
-    \item \textbf{Geometric feature degeneracy.} At both fragment and mask levels,
-    no geometric descriptor exceeds AUC~$=0.7$ for thing/stuff classification. The
-    problem is not insufficient feature engineering---the information is simply not
-    present in the point distribution.
-
-    \item \textbf{Class-agnostic equivalence.} The 0.3 pp gap between semantic and
-    class-agnostic evaluation demonstrates that correct classification is not the
-    issue; the masks themselves are geometrically imprecise. Semantic relabeling
-    cannot compensate for poorly localized geometry.
-
-    \item \textbf{Oracle saturation.} Even with perfect per-instance parameter
-    selection (multi-scale DBSCAN oracle), performance saturates at 39.4\% mIoU. The
-    remaining 60\%+ gap to practical utility cannot be closed by better clustering.
-\end{enumerate}
+Three converging lines of evidence demonstrate why pure geometry saturates.
+First, \textbf{geometric feature degeneracy}: no descriptor exceeds AUC~$=0.7$ for
+thing/stuff classification at either fragment or mask level---the information is
+absent from the point distribution. Second, \textbf{class-agnostic equivalence}:
+the 0.3 pp gap between semantic and class-agnostic mIoU shows that mask imprecision,
+not misclassification, is the failure mode. Third, \textbf{oracle saturation}: even
+with optimal per-instance DBSCAN parameter selection, performance saturates at
+39.4\% mIoU; the remaining 60\%+ gap cannot be closed by better clustering.
 
 \subsection{Implications for Training-Free Perception}
 
-The contrast between \textsc{SepSAM} and ALPINE~\cite{sautier2025alpine} is
-instructive. ALPINE achieves 66.6 PQ on SemanticKITTI using semantic labels,
-temporal information, and simple clustering---without instance-level training.
-\textsc{SepSAM}, stripped of semantics and temporal context, peaks at $\sim$30\%
-mIoU. The $\sim$36 PQ gap between the two methods represents the irreducible value
-of semantic and temporal signals: the instance grouping mechanism is not the
-differentiator; the presence of auxiliary information is. Our findings suggest
-that future training-free perception research should redirect resources from
-geometric heuristic engineering toward lightweight semantic acquisition---whether
-through vision-language model pseudo-labeling, self-supervised feature learning, or
-cross-modal distillation.
-
-Our findings also delineate the only plausible route for improving pure-geometric
-performance beyond the $\sim$30\% ceiling. The six disconfirmed directions
-(Section~\ref{sec:boundary}) collectively demonstrate that further refinement of
-clustering algorithms, geometric feature design, or prompt sampling strategies
-within the current single-frame, 64-line LiDAR regime cannot yield meaningful
-gains. The ceiling could only be shifted by fundamentally enriching the input
-geometric representation: higher-density sensors (128-line, solid-state LiDAR),
-temporal sequences that provide multi-view aggregation, or multi-return echo
-information that captures fine structural details. However, our findings suggest
-that even these richer geometric modalities would only incrementally raise the
-ceiling rather than eliminate it. The geometry-to-semantics gap is qualitative, not
-merely quantitative, and crossing it ultimately requires semantic information.
+The contrast with ALPINE~\cite{sautier2025alpine} (66.6 PQ with semantic labels and
+temporal information, without instance-level training) is instructive: the $\sim$36
+PQ gap measures the irreducible value of semantic and temporal signals. Our findings
+suggest that future training-free research should redirect resources from geometric
+heuristics toward lightweight semantic acquisition---VLM pseudo-labeling,
+self-supervised features, or cross-modal distillation. The six disconfirmed
+directions (Section~\ref{sec:boundary}) further delineate the only plausible route
+beyond $\sim$30\%: fundamentally enriching the input geometry through
+higher-density sensors, temporal sequences, or multi-return echoes. However, even
+these richer modalities would only incrementally raise the ceiling; the
+geometry-to-semantics gap is qualitative, and crossing it ultimately requires
+semantic information.
 
 \subsection{Appropriate Use Cases}
 
-While \textsc{SepSAM} is not a practical instance segmentation system, our
-findings suggest that zero-training, zero-annotation geometric pipelines serve
-specific niches where annotations are unavailable and rapid deployment is
-paramount:
+While \textsc{SepSAM} is not a practical instance segmentation system,
+zero-training, zero-annotation geometric pipelines serve specific niches:
 
 \begin{itemize}
-    \item \textbf{Rapid prototyping in novel environments.} When deploying to a new
-    sensor setup or geographic region without annotated data, a geometric pipeline
-    provides an operational baseline within minutes, enabling immediate system
-    integration and online adaptation before annotations are collected.
-
-    \item \textbf{Weakly-supervised pre-annotation.} Geometric mask proposals can
-    be corrected by human annotators, substantially reducing labeling effort
-    compared to annotation from scratch, particularly in domains where trained
-    models do not yet exist.
-
-    \item \textbf{Active learning sampling.} Regions where geometric masks exhibit
-    high fragmentation or low confidence identify geometrically ambiguous areas,
-    providing a principled criterion for prioritizing human labeling effort.
-
-    \item \textbf{Calibration baseline.} The $\sim$30\% mIoU bound established by
-    this work serves as a quantified lower reference: any approach claiming ``zero
-    training'' or ``training-free'' should substantially exceed this value, and
-    performance near or below it indicates that the method derives no benefit from
-    the semantic or learned components it claims to introduce.
+    \item \textbf{Rapid prototyping.} A geometric pipeline provides an operational
+    baseline within minutes when deploying to novel sensors or environments without
+    annotated data.
+    \item \textbf{Weakly-supervised pre-annotation.} Geometric mask proposals
+    reduce labeling effort compared to annotation from scratch in domains lacking
+    trained models.
+    \item \textbf{Active learning.} Regions with high geometric fragmentation
+    identify ambiguous areas, providing a principled criterion for prioritizing
+    human labeling.
+    \item \textbf{Calibration baseline.} The $\sim$30\% mIoU bound serves as a
+    quantified lower reference: any approach claiming ``zero training'' should
+    substantially exceed this value.
 \end{itemize}
 
 % ============================================================
 \section{Limitations}
 % ============================================================
 
-We explicitly acknowledge the following limitations, and for each
-explain why it does not undermine the paper's core conclusion.
+We explicitly acknowledge six limitations; for each, we explain why the core
+conclusion is unaffected.
 
-\textbf{Single sequence.} The evaluation is confined to SemanticKITTI sequence~08
-(4,071 frames, Velodyne HDL-64E). While this is a standard benchmark, the specific
-ceiling values may shift on nuScenes, Waymo Open Dataset, or other LiDAR
-configurations with different point densities and scan patterns. This affects the
-exact numerical bound but not the qualitative conclusion: the geometric signal
-available in any single-frame spinning LiDAR scan is inherently sparse, and the
-evidence chain---feature degeneracy, oracle saturation, class-agnostic
-equivalence---would apply to any dataset of comparable density.
+\textbf{Single sequence.} Evaluation is confined to SemanticKITTI sequence~08
+(4,071 frames, Velodyne HDL-64E). Exact ceiling values may shift on other
+datasets, but the evidence chain---feature degeneracy, oracle saturation,
+class-agnostic equivalence---generalizes to any LiDAR of comparable density.
 
-\textbf{Single sensor modality.} Our conclusions are derived from spinning LiDAR
-at 10\,Hz. Higher-resolution sensors (128-line, solid-state, or fused multi-sensor
-setups) may provide denser geometric sampling that shifts the ceiling upward.
-However, our feature analysis (Directions~D2, D3) demonstrates that the
-geometry-to-semantics mapping is fundamentally ambiguous at fragment and mask
-scales, a property that persists regardless of sensor resolution; denser sampling
-would narrow but not close the gap.
+\textbf{Single sensor modality.} Our results derive from spinning LiDAR at
+10\,Hz. Higher-resolution sensors may shift the ceiling upward, but the
+geometry-to-semantics ambiguity demonstrated in D2/D3 persists regardless of
+resolution; denser sampling narrows but does not close the gap.
 
-\textbf{SAM domain gap.} SAM was trained on natural RGB images, whereas our
-pipeline feeds range images---single-channel depth projections---through its ViT-H
-encoder. The distribution shift from photographic to range-image data likely
-degrades mask quality beyond what an in-domain foundation model would produce.
-Critically, this limitation affects only the SAM stage of the pipeline; the DBSCAN
-oracle (39.4\%) and the geometric feature analyses (Directions~D2, D3) operate on
-raw 3D point clouds and are independent of SAM, so the ceiling chain is anchored by
-evidence that does not depend on SAM's domain robustness.
+\textbf{SAM domain gap.} SAM was trained on RGB images; feeding range images
+introduces a distribution shift that may degrade mask quality. This affects only
+the SAM stage: the DBSCAN oracle (39.4\%) and feature analyses (D2, D3) are
+SAM-independent, anchoring the ceiling chain in 3D-native evidence.
 
-\textbf{Projection information loss.} The 3D-to-2D range projection and subsequent
-back-projection inevitably discard spatial information, particularly for thin
-structures and vertically overlapping objects that collapse to the same pixel. We
-note that this limitation is shared by all projection-based 3D-to-2D methods and
-is one reason the ceiling might be marginally higher for native 3D approaches.
+\textbf{Projection information loss.} 3D-to-2D projection and back-projection
+discard spatial information for thin and vertically overlapping structures. This
+limitation is shared by all projection-based methods, and the ceiling may be
+marginally higher for native 3D approaches.
 
-\textbf{Thing-only evaluation.} Our analysis covers the 8 moving-object
-(``thing'') classes in SemanticKITTI and does not address ``stuff'' classes (road,
-sidewalk, vegetation, building), which constitute the majority of LiDAR points.
-Extending to stuff would introduce a qualitatively different problem---semantic
-segmentation rather than instance discrimination---and our boundary analysis
-deliberately focuses on the instance setting where geometric signals are most
-informative.
+\textbf{Thing-only evaluation.} Our analysis covers the 8 ``thing'' classes;
+``stuff'' classes introduce a qualitatively different semantic segmentation
+problem, and our boundary analysis deliberately focuses on instance discrimination
+where geometric signals are most informative.
 
-\textbf{Limited method novelty.} \textsc{SepSAM} combines existing components
-(DBSCAN, SAM, skeleton extraction) without proposing novel algorithms. This is by
-design: a minimal, off-the-shelf pipeline ensures that measured performance is
-bounded by the underlying geometric signal rather than by architectural
-sophistication, which is precisely the property a boundary analysis requires.
-Architectural novelty would obscure the ceiling rather than reveal it.
+\textbf{Limited method novelty.} \textsc{SepSAM} combines off-the-shelf components.
+This is by design: a minimal pipeline ensures performance is bounded by the
+geometric signal rather than architectural sophistication, which is precisely the
+property a boundary analysis requires.
 
 % ============================================================
 \section{Conclusion}
 % ============================================================
 
-We presented \textsc{SepSAM}, a zero-training pipeline for LiDAR instance
-segmentation, and more importantly, the first systematic boundary analysis of
-purely geometric approaches. Through six empirically disconfirmed improvement
+We presented \textsc{SepSAM}, and more importantly, the first systematic boundary
+analysis of pure-geometric LiDAR instance segmentation. Through six disconfirmed
 hypotheses, we established a quantified capability chain: DBSCAN oracle
 (39.4\%) $\rightarrow$ pipeline ceiling ($\leq$35\%) $\rightarrow$ empirical
 result (31.6\%) $\rightarrow$ hard practical bound ($\sim$30\%). Our findings
-demonstrate that pure geometry cannot substitute for semantic information in
-LiDAR instance segmentation, providing an evidence-based calibration point
-for the rapidly growing field of training-free perception methods.
+demonstrate that pure geometry cannot substitute for semantic information,
+providing an evidence-based calibration point for training-free perception.
 
 % ============================================================
 % REFERENCES (all 14 entries verified)
