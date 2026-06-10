@@ -1,0 +1,5 @@
+Level,Value,Decline
+Multi-scale DBSCAN Oracle,39.4,4.4
+Pipeline Upper Bound,35.0,3.4
+SepSAM Full Sequence,31.6,1.6
+Hard Practical Bound,30.0,-
